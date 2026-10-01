@@ -1,3 +1,817 @@
-!DOCTYPE html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ISM 6346 — Transformation Roadmap & Governance</title>
+  <style>
+    :root {
+      --primary: #1e293b;
+      --accent: #2563eb;
+      --bg: #f8fafc;
+      --card-bg: #ffffff;
+      --border: #e2e8f0;
+      --text: #0f172a;
+      --text-muted: #64748b;
+      
+      /* Status Colors */
+      --green: #16a34a;
+      --green-bg: #dcfce7;
+      --amber: #d97706;
+      --amber-bg: #fef3c7;
+      --red: #dc2626;
+      --red-bg: #fee2e2;
 
-<h1> Hello World </h1>
+      /* Phase Colors */
+      --crawl-border: #93c5fd;
+      --walk-border: #fcd34d;
+      --run-border: #86efac;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.5;
+      padding-bottom: 4rem;
+    }
+
+    /* Navigation Bar */
+    header {
+      background: var(--card-bg);
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .nav-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0.85rem 1.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .nav-brand h1 {
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: var(--primary);
+    }
+
+    .nav-brand p {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+
+    nav a {
+      text-decoration: none;
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      font-weight: 500;
+      margin-left: 1.25rem;
+      transition: color 0.2s ease;
+    }
+
+    nav a:hover {
+      color: var(--accent);
+    }
+
+    /* Main Container */
+    main {
+      max-width: 1200px;
+      margin: 2rem auto;
+      padding: 0 1.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 2.5rem;
+    }
+
+    /* Section Cards */
+    .section-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 2rem;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+    }
+
+    .section-header {
+      margin-bottom: 1.5rem;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 0.75rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    .section-header h2 {
+      font-size: 1.4rem;
+      color: var(--primary);
+    }
+
+    .role-badge {
+      font-size: 0.75rem;
+      font-weight: 600;
+      background: #eff6ff;
+      color: var(--accent);
+      padding: 0.25rem 0.65rem;
+      border-radius: 9999px;
+      border: 1px solid #bfdbfe;
+    }
+
+    /* Team Meta Grid */
+    .team-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+
+    .team-card {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 1rem;
+    }
+
+    .team-card .role-title {
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--text-muted);
+      font-weight: 700;
+    }
+
+    .team-card .member-name {
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--primary);
+      margin: 0.25rem 0;
+    }
+
+    .team-card .deliverable-desc {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+
+    /* Roadmap Swimlanes */
+    .swimlane-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 1.5rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .swimlane {
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      background: #fafafa;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .swimlane.crawl { border-top: 4px solid var(--crawl-border); }
+    .swimlane.walk  { border-top: 4px solid var(--walk-border); }
+    .swimlane.run   { border-top: 4px solid var(--run-border); }
+
+    .swimlane-header {
+      padding: 1rem;
+      border-bottom: 1px solid var(--border);
+      background: #fff;
+    }
+
+    .swimlane-header h3 {
+      font-size: 1.1rem;
+      color: var(--primary);
+    }
+
+    .swimlane-header span {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+
+    .swimlane-content {
+      padding: 1rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      flex-grow: 1;
+    }
+
+    .initiative-card {
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 0.85rem;
+      font-size: 0.85rem;
+    }
+
+    .initiative-card h4 {
+      font-size: 0.95rem;
+      color: var(--primary);
+      margin-bottom: 0.35rem;
+    }
+
+    .initiative-card .timeline-tag {
+      display: inline-block;
+      font-size: 0.7rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 0.1rem 0.35rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .initiative-card .dependency-arrow {
+      background: #f1f5f9;
+      border-left: 3px solid var(--accent);
+      padding: 0.4rem 0.6rem;
+      font-size: 0.78rem;
+      margin-top: 0.5rem;
+      color: #334155;
+    }
+
+    .phase-rationale-box {
+      margin-top: 1rem;
+      padding: 1rem;
+      background: #f8fafc;
+      border-left: 4px solid var(--primary);
+      border-radius: 4px;
+      font-size: 0.88rem;
+    }
+
+    .phase-rationale-box h4 {
+      margin-bottom: 0.35rem;
+      color: var(--primary);
+      font-size: 0.95rem;
+    }
+
+    /* Tables (RACI & Metrics) */
+    .table-container {
+      overflow-x: auto;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.88rem;
+      text-align: left;
+    }
+
+    th, td {
+      padding: 0.85rem 1rem;
+      border-bottom: 1px solid var(--border);
+      vertical-align: top;
+    }
+
+    th {
+      background: #f8fafc;
+      font-weight: 600;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      font-size: 0.75rem;
+      letter-spacing: 0.05em;
+    }
+
+    /* RACI Badges */
+    .badge-raci {
+      display: inline-block;
+      width: 24px;
+      height: 24px;
+      line-height: 24px;
+      text-align: center;
+      border-radius: 4px;
+      font-weight: 700;
+      font-size: 0.75rem;
+    }
+    .raci-r { background: #dbeafe; color: #1e40af; }
+    .raci-a { background: #fee2e2; color: #991b1b; }
+    .raci-c { background: #fef3c7; color: #92400e; }
+    .raci-i { background: #f1f5f9; color: #475569; }
+
+    /* QBR Dashboard Visual Components */
+    .qbr-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 1.25rem;
+      border-radius: 6px;
+      margin-bottom: 1.5rem;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .health-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.4rem 0.9rem;
+      border-radius: 9999px;
+      font-weight: 700;
+      font-size: 0.85rem;
+    }
+
+    .health-green { background: var(--green-bg); color: var(--green); }
+    .health-amber { background: var(--amber-bg); color: var(--amber); }
+    .health-red   { background: var(--red-bg);   color: var(--red); }
+
+    .pulse-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: currentColor;
+    }
+
+    .dashboard-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .kpi-card {
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 1rem;
+      background: #fff;
+    }
+
+    .kpi-type {
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      font-weight: 700;
+      color: var(--text-muted);
+    }
+
+    .kpi-name {
+      font-size: 0.95rem;
+      font-weight: 600;
+      margin: 0.2rem 0 0.5rem 0;
+    }
+
+    .kpi-numbers {
+      display: flex;
+      align-items: baseline;
+      gap: 0.5rem;
+    }
+
+    .kpi-val {
+      font-size: 1.35rem;
+      font-weight: 700;
+      color: var(--primary);
+    }
+
+    .kpi-target {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+
+    .kpi-status-tag {
+      display: inline-block;
+      margin-top: 0.5rem;
+      font-size: 0.7rem;
+      font-weight: 600;
+      padding: 0.15rem 0.45rem;
+      border-radius: 4px;
+    }
+
+    .status-ontrack { background: var(--green-bg); color: var(--green); }
+    .status-atrisk  { background: var(--amber-bg); color: var(--amber); }
+    .status-offtrack{ background: var(--red-bg);   color: var(--red); }
+
+    .decisions-box {
+      background: #fff7ed;
+      border: 1px solid #ffedd5;
+      border-left: 4px solid #ea580c;
+      border-radius: 4px;
+      padding: 1.25rem;
+    }
+
+    .decisions-box h3 {
+      color: #9a3412;
+      font-size: 1.05rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .decisions-box ol {
+      margin-left: 1.25rem;
+      font-size: 0.88rem;
+      color: #7c2d12;
+    }
+
+    .decisions-box ol li {
+      margin-bottom: 0.4rem;
+    }
+
+    /* Print & Landscape Optimization (Rubric 6.38) */
+    @media print {
+      body { background: #fff; padding: 0; }
+      header { display: none; }
+      .section-card { border: none; box-shadow: none; padding: 0; page-break-after: always; }
+      @page { size: landscape; margin: 1cm; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ====================================================================== -->
+  <!-- TOP NAVIGATION                                                         -->
+  <!-- ====================================================================== -->
+  <header>
+    <div class="nav-container">
+      <div class="nav-brand">
+        <h1>ISM 6346: Transformation Roadmap & Governance</h1>
+        <p>Section B Group Activity · Week 6 Portfolio Submission</p>
+      </div>
+      <nav>
+        <a href="#overview">Overview</a>
+        <a href="#roadmap">1. Roadmap</a>
+        <a href="#raci">2. Governance RACI</a>
+        <a href="#dashboard">3. QBR Dashboard</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+
+    <!-- ====================================================================== -->
+    <!-- CASE OVERVIEW & TEAM METADATA (Section 6.34 & 6.35)                     -->
+    <!-- ====================================================================== -->
+    <section id="overview" class="section-card">
+      <div class="section-header">
+        <h2>Case Summary & Team Responsibilities</h2>
+        <span class="role-badge">Group Artifact</span>
+      </div>
+
+      <!-- EDIT HERE: Company Profile and Primary Source Citations (Section 6.35 / 6.40) -->
+      <div style="margin-bottom: 1.5rem;">
+        <h3 style="font-size: 1.1rem; margin-bottom: 0.35rem;">Case Selection: [Insert Company Name, e.g., DBS Bank / Maersk / Domino's]</h3>
+        <p style="font-size: 0.9rem; color: #475569;">
+          <strong>Case Overview:</strong> [Insert 2–3 sentences summarizing the enterprise context and transformation scope].
+        </p>
+        <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 0.35rem;">
+          <strong>Primary Sources:</strong> [List specific citations: e.g., Annual Report 2023 Digital Strategy section, Investor Day presentation, Harvard Business School Case #...].
+        </p>
+      </div>
+
+      <div class="team-grid">
+        <div class="team-card">
+          <div class="role-title">Member A · Roadmap Sequencer</div>
+          <div class="member-name">[Team Member A Name]</div>
+          <div class="deliverable-desc">Accountable for Crawl/Walk/Run sequencing, dependency annotations, and phase rationale narratives.</div>
+        </div>
+        <div class="team-card">
+          <div class="role-title">Member B · Governance Designer</div>
+          <div class="member-name">[Team Member B Name]</div>
+          <div class="deliverable-desc">Accountable for 5–7 recurring governance decisions, single-Accountable assignments, and rationale.</div>
+        </div>
+        <div class="team-card">
+          <div class="role-title">Member C · Dashboard Designer</div>
+          <div class="member-name">Hudson Trussell <!-- or Member C Name --></div>
+          <div class="deliverable-desc">Accountable for QBR Dashboard layout, leading/lagging metric balance, and leadership decision tracking.</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ====================================================================== -->
+    <!-- DELIVERABLE 1: TRANSFORMATION ROADMAP (MEMBER A)                        -->
+    <!-- Rubric 6.36 & 6.40: Crawl/Walk/Run + explicit dependency annotations    -->
+    <!-- ====================================================================== -->
+    <section id="roadmap" class="section-card">
+      <div class="section-header">
+        <h2>1. Transformation Roadmap</h2>
+        <span class="role-badge">Member A Deliverable</span>
+      </div>
+
+      <div class="swimlane-container">
+        <!-- CRAWL PHASE -->
+        <div class="swimlane crawl">
+          <div class="swimlane-header">
+            <h3>Crawl — Foundation</h3>
+            <span>Capability Building · Months 1–12 (Q1–Q4)</span>
+          </div>
+          <div class="swimlane-content">
+            <!-- Initiative Card 1 -->
+            <div class="initiative-card">
+              <span class="timeline-tag">Q1 – Q2</span>
+              <h4>[Initiative 1: Enterprise Data Lakehouse Consolidation]</h4>
+              <p>Unify siloed customer transaction logs into a centralized real-time lakehouse.</p>
+              <div class="dependency-arrow">
+                <strong>Enables:</strong> Foundation for unified customer profiles in Walk.
+              </div>
+            </div>
+
+            <!-- Initiative Card 2 -->
+            <div class="initiative-card">
+              <span class="timeline-tag">Q2 – Q4</span>
+              <h4>[Initiative 2: Core API Gateway Modernization]</h4>
+              <p>Standardize RESTful services and retire legacy point-to-point SOAP endpoints.</p>
+              <div class="dependency-arrow">
+                <strong>Enables:</strong> Rapid service orchestration for pilot mobile apps.
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- WALK PHASE -->
+        <div class="swimlane walk">
+          <div class="swimlane-header">
+            <h3>Walk — Deployment</h3>
+            <span>Targeted Pilot & Validation · Months 12–24 (Q5–Q8)</span>
+          </div>
+          <div class="swimlane-content">
+            <!-- Initiative Card 3 -->
+            <div class="initiative-card">
+              <span class="timeline-tag">Q5 – Q6</span>
+              <h4>[Initiative 3: Pilot Real-Time Personalization Engine]</h4>
+              <p>Deploy recommendation algorithms strictly within the North America e-commerce unit.</p>
+              <div class="dependency-arrow">
+                <strong>Depends on:</strong> Initiative 1 (Lakehouse Data Foundation).<br />
+                <strong>Readiness Signal:</strong> +15% conversion lift in pilot test group.
+              </div>
+            </div>
+
+            <!-- Initiative Card 4 -->
+            <div class="initiative-card">
+              <span class="timeline-tag">Q6 – Q8</span>
+              <h4>[Initiative 4: Automated Dispatch Workflow (Pilot Region)]</h4>
+              <p>Deploy automated scheduling in high-density European logistics hubs.</p>
+              <div class="dependency-arrow">
+                <strong>Depends on:</strong> Initiative 2 (Modern API Gateway).<br />
+                <strong>Readiness Signal:</strong> 25% reduction in manual dispatch overrides.
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- RUN PHASE -->
+        <div class="swimlane run">
+          <div class="swimlane-header">
+            <h3>Run — Scale</h3>
+            <span>Enterprise Scaling & Org Change · Months 24–36 (Q9–Q12)</span>
+          </div>
+          <div class="swimlane-content">
+            <!-- Initiative Card 5 -->
+            <div class="initiative-card">
+              <span class="timeline-tag">Q9 – Q12</span>
+              <h4>[Initiative 5: Global Omnichannel AI Platform]</h4>
+              <p>Scale real-time recommendation engine across all international divisions and store POS.</p>
+              <div class="dependency-arrow">
+                <strong>Scales:</strong> Initiative 3 (Pilot Personalization Engine).<br />
+                <strong>Org Change Required:</strong> Retrain store staff; centralize pricing authority.
+              </div>
+            </div>
+
+            <!-- Initiative Card 6 -->
+            <div class="initiative-card">
+              <span class="timeline-tag">Q10 – Q12</span>
+              <h4>[Initiative 6: Autonomous Logistics Network]</h4>
+              <p>Full enterprise roll-out of algorithmic dispatch across global fleet.</p>
+              <div class="dependency-arrow">
+                <strong>Scales:</strong> Initiative 4 (Pilot Dispatch Workflow).<br />
+                <strong>Org Change Required:</strong> Transition regional dispatchers into exception managers.
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Phase Rationale Paragraphs (75–100 words each required by Section 6.34) -->
+      <div class="phase-rationale-box">
+        <h4>Crawl Phase Dependency Rationale (Member A)</h4>
+        <p>[Write 75–100 words here explaining why Crawl initiatives must precede Walk initiatives. Address dependency logic: e.g., predictive analytics cannot run reliably without unified, cleansed data in the lakehouse...]</p>
+      </div>
+
+      <div class="phase-rationale-box" style="margin-top: 0.75rem;">
+        <h4>Walk & Run Transition Rationale (Member A)</h4>
+        <p>[Write 75–100 words explaining why Walk pilots are needed to validate unit economics and operational readiness before committing global capital in the Run phase...]</p>
+      </div>
+    </section>
+
+    <!-- ====================================================================== -->
+    <!-- DELIVERABLE 2: GOVERNANCE RACI MATRIX (MEMBER B)                         -->
+    <!-- Rubric 6.37 & 6.40: 5–7 recurring decisions, 1 Accountable + rationale  -->
+    <!-- ====================================================================== -->
+    <section id="raci" class="section-card">
+      <div class="section-header">
+        <h2>2. Governance RACI Matrix</h2>
+        <span class="role-badge">Member B Deliverable</span>
+      </div>
+
+      <p style="font-size: 0.88rem; color: var(--text-muted); margin-bottom: 1rem;">
+        Each decision governs recurring trade-offs across the roadmap. Exactly one role is marked Accountable (<strong>A</strong>) per decision.
+      </p>
+
+      <div class="table-container">
+        <table>
+          <thead>
+            <tr>
+              <th style="width: 25%;">Recurring Governance Decision</th>
+              <th style="text-align: center;">Chief Digital Officer (CDO)</th>
+              <th style="text-align: center;">Chief Info Officer (CIO)</th>
+              <th style="text-align: center;">SVP Product / Ops</th>
+              <th style="text-align: center;">BU General Managers</th>
+              <th style="width: 35%;">Accountable Role & Rationale</th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- Decision 1: Budget Allocation -->
+            <tr>
+              <td><strong>1. Transformation Budget Reallocation:</strong> Reallocating capital between initiatives when quarterly ROI thresholds shift.</td>
+              <td style="text-align: center;"><span class="badge-raci raci-a">A</span></td>
+              <td style="text-align: center;"><span class="badge-raci raci-c">C</span></td>
+              <td style="text-align: center;"><span class="badge-raci raci-c">C</span></td>
+              <td style="text-align: center;"><span class="badge-raci raci-i">I</span></td>
+              <td><strong>Accountable: CDO.</strong> The CDO owns the transformation investment envelope and must preserve enterprise portfolio coherence over divisional budget disputes.</td>
+            </tr>
+
+            <!-- Decision 2: Architecture Standards -->
+            <tr>
+              <td><strong>2. Platform Architecture Overrides:</strong> Approving exceptions to shared API, cloud, and microservice enterprise standards.</td>
+              <td style="text-align: center;"><span class="badge-raci raci-c">C</span></td>
+              <td style="text-align: center;"><span class="badge-raci raci-a">A</span></td>
+              <td style="text-align: center;"><span class="badge-raci raci-i">I</span></td>
+              <td style="text-align: center;"><span class="badge-raci raci-r">R</span></td>
+              <td><strong>Accountable: CIO.</strong> The CIO maintains technical debt governance and long-term infrastructure maintainability across all digital assets.</td>
+            </tr>
+
+            <!-- Decision 3: Data Governance -->
+            <tr>
+              <td><strong>3. Cross-BU Data Access & Sharing:</strong> Setting mandatory master data quality standards and granting cross-divisional data access.</td>
+              <td style="text-align: center;"><span class="badge-raci raci-a">A</span></td>
+              <td style="text-align: center;"><span class="badge-raci raci-c">C</span></td>
+              <td style="text-align: center;"><span class="badge-raci raci-r">R</span></td>
+              <td style="text-align: center;"><span class="badge-raci raci-c">C</span></td>
+              <td><strong>Accountable: CDO / Head of Data.</strong> Resolves data-hoarding between BUs to guarantee enterprise lakehouse integrity.</td>
+            </tr>
+
+            <!-- Decision 4: Initiative Prioritization -->
+            <tr>
+              <td><strong>4. Feature & Backlog Prioritization:</strong> Deciding sequence conflicts between BU-specific requests and enterprise platform features.</td>
+              <td style="text-align: center;"><span class="badge-raci raci-c">C</span></td>
+              <td style="text-align: center;"><span class="badge-raci raci-i">I</span></td>
+              <td style="text-align: center;"><span class="badge-raci raci-a">A</span></td>
+              <td style="text-align: center;"><span class="badge-raci raci-r">R</span></td>
+              <td><strong>Accountable: SVP Product.</strong> Holds the ultimate decision-right balancing end-user feature delivery against platform foundational build.</td>
+            </tr>
+
+            <!-- Decision 5: Vendor & Partnership Selection -->
+            <tr>
+              <td><strong>5. Strategic Tech Vendor Commitments:</strong> Selecting long-term cloud and enterprise software partners.</td>
+              <td style="text-align: center;"><span class="badge-raci raci-c">C</span></td>
+              <td style="text-align: center;"><span class="badge-raci raci-a">A</span></td>
+              <td style="text-align: center;"><span class="badge-raci raci-i">I</span></td>
+              <td style="text-align: center;"><span class="badge-raci raci-i">I</span></td>
+              <td><strong>Accountable: CIO.</strong> Prevents siloed BU procurement from producing redundant contracts and unsupported infrastructure footprints.</td>
+            </tr>
+
+            <!-- Decision 6: Case-Specific Governance Choice -->
+            <tr>
+              <td><strong>6. Pilot-to-Scale Go/No-Go Gate:</strong> Authorizing transition of Walk pilots into enterprise-wide Run deployment.</td>
+              <td style="text-align: center;"><span class="badge-raci raci-a">A</span></td>
+              <td style="text-align: center;"><span class="badge-raci raci-c">C</span></td>
+              <td style="text-align: center;"><span class="badge-raci raci-r">R</span></td>
+              <td style="text-align: center;"><span class="badge-raci raci-c">C</span></td>
+              <td><strong>Accountable: CDO.</strong> Ensures strict threshold metrics from pilot are met before unlocking major Run expenditure.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ====================================================================== -->
+    <!-- DELIVERABLE 3: QBR DASHBOARD (MEMBER C)                                -->
+    <!-- Rubric 6.38 & 6.40: 6–8 leading/lagging metrics, health status,       -->
+    <!-- and Decisions Required this Quarter (matching Member B's RACI)         -->
+    <!-- ====================================================================== -->
+    <section id="dashboard" class="section-card">
+      <div class="section-header">
+        <h2>3. Executive QBR Dashboard</h2>
+        <span class="role-badge">Member C Deliverable</span>
+      </div>
+
+      <!-- Executive Health Header -->
+      <div class="qbr-header" style="background: #f1f5f9; border: 1px solid var(--border);">
+        <div>
+          <span style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-muted); font-weight: 700;">Executive Review Artifact</span>
+          <h3 style="font-size: 1.2rem; color: var(--primary);">Quarterly Transformation Health · Q3 FY26</h3>
+        </div>
+        <div class="health-badge health-green">
+          <span class="pulse-dot"></span>
+          <span>OVERALL STATUS: ON TRACK</span>
+        </div>
+      </div>
+      <p style="font-size: 0.88rem; color: #334155; margin-top: -0.75rem; margin-bottom: 1.5rem;">
+        <strong>Health Rationale:</strong> Foundational API gateways and data pipelines are complete on schedule; pilot conversion lifts in North America meet required thresholds for Run scaling.
+      </p>
+
+      <!-- 6–8 Metrics (Leading vs. Lagging Mix + Org Health Metric) -->
+      <h3 style="font-size: 1rem; color: var(--primary); margin-bottom: 0.75rem;">Transformation Metric Scorecard (Leading & Lagging)</h3>
+      <div class="dashboard-grid">
+        
+        <!-- Metric 1: Leading -->
+        <div class="kpi-card">
+          <div class="kpi-type">Leading Indicator · Crawl</div>
+          <div class="kpi-name">Legacy API Deprecation %</div>
+          <div class="kpi-numbers">
+            <span class="kpi-val">82%</span>
+            <span class="kpi-target">/ Target 75%</span>
+          </div>
+          <span class="kpi-status-tag status-ontrack">On Track</span>
+        </div>
+
+        <!-- Metric 2: Leading -->
+        <div class="kpi-card">
+          <div class="kpi-type">Leading Indicator · Walk</div>
+          <div class="kpi-name">Pilot Regional Adoption Rate</div>
+          <div class="kpi-numbers">
+            <span class="kpi-val">68%</span>
+            <span class="kpi-target">/ Target 60%</span>
+          </div>
+          <span class="kpi-status-tag status-ontrack">On Track</span>
+        </div>
+
+        <!-- Metric 3: Lagging -->
+        <div class="kpi-card">
+          <div class="kpi-type">Lagging Indicator · Walk</div>
+          <div class="kpi-name">Pilot Conversion Lift</div>
+          <div class="kpi-numbers">
+            <span class="kpi-val">+14.2%</span>
+            <span class="kpi-target">/ Target +15.0%</span>
+          </div>
+          <span class="kpi-status-tag status-atrisk">At Risk</span>
+        </div>
+
+        <!-- Metric 4: Lagging -->
+        <div class="kpi-card">
+          <div class="kpi-type">Lagging Indicator · Run</div>
+          <div class="kpi-name">Realized Cost Savings (OpEx)</div>
+          <div class="kpi-numbers">
+            <span class="kpi-val">$4.2M</span>
+            <span class="kpi-target">/ Target $4.0M</span>
+          </div>
+          <span class="kpi-status-tag status-ontrack">On Track</span>
+        </div>
+
+        <!-- Metric 5: Organizational Change Metric (Required by 6.38) -->
+        <div class="kpi-card">
+          <div class="kpi-type">Org Health Indicator</div>
+          <div class="kpi-name">Digital Fluency Training %</div>
+          <div class="kpi-numbers">
+            <span class="kpi-val">89%</span>
+            <span class="kpi-target">/ Target 85%</span>
+          </div>
+          <span class="kpi-status-tag status-ontrack">On Track</span>
+        </div>
+
+        <!-- Metric 6: Org / Cultural Metric -->
+        <div class="kpi-card">
+          <div class="kpi-type">Org Health Indicator</div>
+          <div class="kpi-name">Cross-Functional Team Retention</div>
+          <div class="kpi-numbers">
+            <span class="kpi-val">94%</span>
+            <span class="kpi-target">/ Target 90%</span>
+          </div>
+          <span class="kpi-status-tag status-ontrack">On Track</span>
+        </div>
+
+      </div>
+
+      <!-- Decisions Required This Quarter (Must map to RACI choices - Section 6.38 & 6.40) -->
+      <div class="decisions-box">
+        <h3>Decisions Required This Quarter</h3>
+        <p style="font-size: 0.85rem; color: #7c2d12; margin-bottom: 0.75rem;">
+          Governance choices escalated from Member B's RACI matrix requiring executive resolution this quarter:
+        </p>
+        <ol>
+          <li>
+            <strong>Scale Authorization (RACI #6):</strong> Review North America pilot conversion metrics to release Phase 3 Run funding for European and Asian rollouts. <em>(Accountable: CDO)</em>
+          </li>
+          <li>
+            <strong>Architecture Exception Request (RACI #2):</strong> Adjudicate Logistics BU petition to retain custom legacy routing engine vs. standardizing on enterprise cloud dispatch. <em>(Accountable: CIO)</em>
+          </li>
+          <li>
+            <strong>H2 Budget Reallocation (RACI #1):</strong> Shift $1.5M surplus from completed data lakehouse build into expanding change management training programs. <em>(Accountable: CDO)</em>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+  </main>
+
+</body>
+</html>
