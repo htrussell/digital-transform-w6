@@ -1,0 +1,61 @@
+# ==============================================================================
+# ISM 6346 — Transformation Roadmap Repository .gitignore
+# Place in the root of the repository before cutting any feature branches.
+# ==============================================================================
+
+# ------------------------------------------------------------------------------
+# 1. Operating System Metadata (Section 6.44)
+# Prevents cross-platform clutter from leaking into teammates' pulls.
+# ------------------------------------------------------------------------------
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+Thumbs.db
+ehthumbs.db
+[Dd]esktop.ini
+
+# ------------------------------------------------------------------------------
+# 2. Environment Variables & Credentials (Section 6.44)
+# Never commit API keys, database credentials, or access tokens to public repos.
+# ------------------------------------------------------------------------------
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.cert
+
+# ------------------------------------------------------------------------------
+# 3. Dependencies & Package Managers (Section 6.44)
+# ------------------------------------------------------------------------------
+node_modules/
+
+# ------------------------------------------------------------------------------
+# 4. Logs & Debugging Output (Section 6.44)
+# ------------------------------------------------------------------------------
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# ------------------------------------------------------------------------------
+# 5. Large Binary Files & Archives (Section 6.44)
+# Git inflates permanently with large binaries; store elsewhere and link instead.
+# ------------------------------------------------------------------------------
+*.zip
+*.tar.gz
+*.rar
+*.7z
+*.mp4
+*.mov
+*.avi
+
+# ------------------------------------------------------------------------------
+# 6. Local Editor / IDE Clutter (Optional standard hygiene)
+# ------------------------------------------------------------------------------
+.vscode/
+.idea/
+*.swp
+*.swo
