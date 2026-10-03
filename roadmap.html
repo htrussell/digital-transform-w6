@@ -271,39 +271,10 @@
       font-size: 1.02rem;
     }
 
-    .hero-meta {
-      margin-top: 13px;
-      color: var(--muted);
-      font-size: .79rem;
-    }
-
     /* ---------------- Stacked scrolling deck ---------------- */
 
     .deck-section {
       padding: 20px 0 70px;
-    }
-
-    .deck-help {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      gap: 9px;
-      margin-bottom: 12px;
-      color: var(--muted);
-      font-size: .78rem;
-    }
-
-    .scroll-icon {
-      width: 29px;
-      height: 29px;
-      border: 1px solid var(--line);
-      border-radius: 50%;
-      background: var(--surface);
-      display: grid;
-      place-items: center;
-      box-shadow: var(--shadow-soft);
-      color: var(--blue);
-      font-weight: 900;
     }
 
     .deck-stage {
@@ -857,21 +828,11 @@
       <h1>From foundation<br />to fulfillment at scale.</h1>
 
       <p class="hero-copy">
-        Walmart’s U.S. supply-chain and omnichannel transformation is sequenced as
-        <strong>Crawl → Walk → Run</strong>, with each later initiative tied to a capability built earlier.
+        <strong>Crawl → Walk → Run:</strong> build, prove, scale.
       </p>
-
-      <div class="hero-meta">
-        2022–2025 · 8 initiatives · 5 explicit dependency links · Walmart public disclosures
-      </div>
     </section>
 
     <section class="deck-section">
-      <div class="deck-help">
-        <span class="scroll-icon">↕</span>
-        <span>Scroll slowly over the deck. Click the highlighted card to open its initiatives.</span>
-      </div>
-
       <div class="deck-stage" id="deckStage" tabindex="0" aria-label="Scrollable transformation phases">
 
         <article class="deck-card" data-key="crawl">
@@ -1065,7 +1026,7 @@
     </section>
 
     <footer>
-      <span>Member A · Roadmap Sequencer · Group 9</span>
+      <span>Walmart U.S. supply chain case · 2022–2025</span>
       <span>
         Background photo:
         <a target="_blank" rel="noopener"
@@ -1303,7 +1264,7 @@
        STACKED DECK
        - finite, not circular
        - past cards remain behind the current card
-       - wheel input is accumulated and throttled for slower motion
+       - horizontal wheel input is accumulated and throttled for slower motion
        ========================================================= */
 
     const stage = document.getElementById("deckStage");
@@ -1420,8 +1381,12 @@
     }
 
     stage.addEventListener("wheel", event => {
-      /* At the first/last deck, let the page scroll naturally outward. */
-      const goingForward = event.deltaY > 0;
+      /* Use trackpad side-scroll; Shift + vertical wheel is a mouse fallback. */
+      const sideDelta = event.shiftKey ? event.deltaY : event.deltaX;
+      if (Math.abs(sideDelta) < 1) return;
+
+      /* At the first/last deck, don't trap sideways scrolling. */
+      const goingForward = sideDelta > 0;
       const canMove =
         (goingForward && currentIndex < cards.length - 1) ||
         (!goingForward && currentIndex > 0);
@@ -1435,7 +1400,7 @@
 
       if (scrollLocked) return;
 
-      wheelAccumulator += event.deltaY;
+      wheelAccumulator += sideDelta;
 
       clearTimeout(wheelResetTimer);
       wheelResetTimer = setTimeout(() => {
