@@ -293,9 +293,14 @@
       inset: 12% 8%;
       z-index: 0;
       background: radial-gradient(circle at center,
-        color-mix(in srgb, var(--blue) 12%, transparent),
+        color-mix(in srgb, var(--blue) 24%, transparent),
         transparent 67%);
       pointer-events: none;
+    }
+
+    .deck-stage:hover::before,
+    .deck-stage:focus-within::before {
+      animation: deck-stage-pulse 1.35s ease-in-out infinite;
     }
 
     .deck-card {
@@ -347,6 +352,45 @@
 
     html[data-theme="dark"] .deck-card.is-current {
       box-shadow: 0 34px 90px rgba(0,0,0,.50);
+    }
+
+    .deck-stage:hover .deck-card,
+    .deck-stage:focus-within .deck-card {
+      animation: deck-stack-pulse 1.35s ease-in-out infinite;
+    }
+
+    .deck-stage:hover .deck-card:nth-child(2),
+    .deck-stage:focus-within .deck-card:nth-child(2) { animation-delay: .12s; }
+    .deck-stage:hover .deck-card:nth-child(3),
+    .deck-stage:focus-within .deck-card:nth-child(3) { animation-delay: .24s; }
+    .deck-stage:hover .deck-card:nth-child(4),
+    .deck-stage:focus-within .deck-card:nth-child(4) { animation-delay: .36s; }
+
+    .deck-card.is-current:hover,
+    .deck-card.is-current:focus-visible {
+      border-color: var(--blue);
+      animation: deck-current-pulse 1.35s ease-in-out infinite;
+    }
+
+    @keyframes deck-stage-pulse {
+      0%, 100% { opacity: .55; transform: scale(1); }
+      50% { opacity: 1; transform: scale(1.13); }
+    }
+
+    @keyframes deck-stack-pulse {
+      0%, 100% { box-shadow: var(--shadow); }
+      50% { box-shadow: 0 0 0 5px color-mix(in srgb, var(--blue) 16%, transparent), var(--shadow); }
+    }
+
+    @keyframes deck-current-pulse {
+      0%, 100% {
+        outline: 0 solid color-mix(in srgb, var(--blue) 0%, transparent);
+        box-shadow: var(--shadow);
+      }
+      50% {
+        outline: 10px solid color-mix(in srgb, var(--blue) 24%, transparent);
+        box-shadow: 0 0 0 5px color-mix(in srgb, var(--blue) 18%, transparent), 0 34px 90px rgba(4,31,65,.28);
+      }
     }
 
     .deck-card .index-label {
@@ -423,12 +467,6 @@
       color: var(--text-2);
       font-size: .7rem;
       font-weight: 850;
-    }
-
-    .click-note {
-      color: var(--blue);
-      font-size: .73rem;
-      font-weight: 900;
     }
 
     .deck-progress {
@@ -691,10 +729,14 @@
     }
 
     summary {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
       cursor: pointer;
       list-style: none;
       padding: 18px 20px;
       font-weight: 850;
+      min-height: 74px;
     }
 
     summary::-webkit-details-marker { display: none; }
@@ -783,6 +825,12 @@
     @media (prefers-reduced-motion: reduce) {
       * { scroll-behavior: auto !important; }
       .deck-card { transition: none; }
+      .deck-stage:hover::before,
+      .deck-stage:focus-within::before,
+      .deck-stage:hover .deck-card,
+      .deck-stage:focus-within .deck-card,
+      .deck-card.is-current:hover,
+      .deck-card.is-current:focus-visible { animation: none; }
     }
   </style>
 </head>
@@ -848,7 +896,6 @@
 
           <div class="deck-footer">
             <span class="pill">3 initiatives · Q1–Q4</span>
-            <span class="click-note">Click for initiatives →</span>
           </div>
         </article>
 
@@ -865,7 +912,6 @@
 
           <div class="deck-footer">
             <span class="pill">3 initiatives · Q5–Q8</span>
-            <span class="click-note">Click for initiatives →</span>
           </div>
         </article>
 
@@ -882,7 +928,6 @@
 
           <div class="deck-footer">
             <span class="pill">2 initiatives · Q9–Q12+</span>
-            <span class="click-note">Click for initiatives →</span>
           </div>
         </article>
 
@@ -899,7 +944,6 @@
 
           <div class="deck-footer">
             <span class="pill">5 dependency links</span>
-            <span class="click-note">Click for logic →</span>
           </div>
         </article>
 
@@ -1242,6 +1286,17 @@
 
     const root = document.documentElement;
     const themeToggle = document.getElementById("themeToggle");
+    const sourceLog = document.querySelector("#sources details");
+
+    document.addEventListener("click", event => {
+      if (sourceLog.open && !sourceLog.contains(event.target)) {
+        sourceLog.open = false;
+      }
+    });
+
+    document.addEventListener("keydown", event => {
+      if (event.key === "Escape") sourceLog.open = false;
+    });
 
     const savedTheme = localStorage.getItem("walmart-roadmap-theme");
     const systemDark = window.matchMedia &&
