@@ -1,13 +1,136 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Walmart Transformation Roadmap</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Walmart Transformation Roadmap</title>
+  <meta name="description" content="Walmart's Next-Generation Supply Chain and Omnichannel Fulfillment Transformation roadmap, sequenced as Crawl, Walk, and Run." />
+  <style>
+    :root{
+      --wm-blue:#0071CE;
+      --wm-yellow:#FFC220;
+      --ink:#041F41;
+      --ink-2:#25364d;
+      --sky:#EAF5FF;
+      --cream:#FFF8D9;
+      --mist:#F5F8FC;
+      --white:#FFFFFF;
+      --line:#D9E4EF;
+      --muted:#60748b;
+      --shadow:0 18px 55px rgba(4,31,65,.12);
+      --shadow-soft:0 10px 30px rgba(4,31,65,.08);
+      --radius:24px;
+    }
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{margin:0;font-family:Inter,ui-sans-serif,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;color:var(--ink);background:radial-gradient(circle at 12% 0%,rgba(0,113,206,.10),transparent 28%),radial-gradient(circle at 88% 8%,rgba(255,194,32,.13),transparent 24%),linear-gradient(180deg,#fbfdff 0%,#f6f9fd 55%,#f8fbff 100%);line-height:1.55;min-height:100vh}
+    a{color:inherit}.shell{width:min(1180px,calc(100% - 32px));margin:0 auto}
+    .topbar{position:sticky;top:0;z-index:50;backdrop-filter:blur(18px);background:rgba(255,255,255,.88);border-bottom:1px solid rgba(217,228,239,.9)}
+    .nav{min-height:72px;display:flex;align-items:center;justify-content:space-between;gap:24px}.brand{display:flex;align-items:center;gap:12px;text-decoration:none;min-width:0}
+    .brand-mark{width:40px;height:40px;border-radius:13px;background:var(--wm-blue);display:grid;place-items:center;box-shadow:0 10px 24px rgba(0,113,206,.20);flex:0 0 auto}
+    .spark{font-size:24px;line-height:1;color:var(--wm-yellow);font-weight:900;transform:translateY(-1px)}
+    .brand-copy strong{display:block;font-size:.98rem;letter-spacing:-.02em}.brand-copy span{display:block;color:var(--muted);font-size:.75rem;margin-top:1px}
+    .navlinks{display:flex;gap:8px;flex-wrap:wrap}.navlinks a{text-decoration:none;font-size:.86rem;font-weight:700;padding:9px 12px;border-radius:999px;color:var(--ink-2)}
+    .navlinks a:hover,.navlinks a[aria-current="page"]{background:var(--sky);color:var(--wm-blue)}
+    .hero{padding:74px 0 38px}.hero-grid{display:grid;grid-template-columns:1.45fr .55fr;gap:36px;align-items:end}
+    .eyebrow{display:inline-flex;align-items:center;gap:9px;margin-bottom:18px;font-size:.78rem;font-weight:800;letter-spacing:.09em;text-transform:uppercase;color:var(--wm-blue)}.eyebrow::before{content:"";width:34px;height:3px;background:var(--wm-yellow);border-radius:999px}
+    h1{margin:0;font-size:clamp(2.45rem,5vw,5.2rem);line-height:.98;letter-spacing:-.055em;max-width:900px}.hero p{max-width:760px;margin:24px 0 0;color:var(--ink-2);font-size:clamp(1rem,1.5vw,1.18rem)}
+    .hero-note{margin-top:18px;color:var(--muted);font-size:.86rem;max-width:760px}.hero-note strong{color:var(--ink)}
+    .hero-stat{background:var(--ink);color:white;border-radius:28px;padding:26px;box-shadow:var(--shadow);position:relative;overflow:hidden}.hero-stat::after{content:"";width:150px;height:150px;border-radius:50%;background:var(--wm-yellow);opacity:.14;position:absolute;right:-48px;top:-60px}
+    .hero-stat .number{font-size:3.4rem;font-weight:850;line-height:1}.hero-stat .label{margin-top:6px;font-weight:750}.hero-stat .meta{margin-top:14px;color:#c8d5e2;font-size:.83rem}
+    .microstats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:34px}.microstat{background:rgba(255,255,255,.82);border:1px solid var(--line);border-radius:18px;padding:16px 18px;box-shadow:var(--shadow-soft)}.microstat strong{display:block;font-size:1.18rem}.microstat span{font-size:.78rem;color:var(--muted)}
+    section{scroll-margin-top:94px}.section-head{display:flex;justify-content:space-between;align-items:end;gap:24px;margin:64px 0 22px}.section-head h2{margin:0;font-size:clamp(1.7rem,3vw,2.6rem);letter-spacing:-.035em}.section-head p{margin:0;max-width:560px;color:var(--muted);font-size:.92rem}
+    .phase-decks{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;align-items:start}.phase{border-radius:var(--radius);padding:20px;position:relative;border:1px solid var(--line);box-shadow:var(--shadow);overflow:hidden}
+    .phase.crawl{background:linear-gradient(180deg,#f8fcff 0%,var(--sky) 100%)}.phase.walk{background:linear-gradient(180deg,#fffef8 0%,var(--cream) 100%)}.phase.run{background:linear-gradient(180deg,#f9fbff 0%,#eaf0f9 100%)}.phase::before{content:"";position:absolute;inset:0 0 auto 0;height:6px}.phase.crawl::before{background:var(--wm-blue)}.phase.walk::before{background:var(--wm-yellow)}.phase.run::before{background:var(--ink)}
+    .phase-head{padding:8px 4px 14px}.phase-kicker{font-size:.72rem;font-weight:850;letter-spacing:.09em;text-transform:uppercase;color:var(--muted)}.phase h3{margin:4px 0 4px;font-size:1.5rem;letter-spacing:-.035em}.phase-sub{font-size:.84rem;color:var(--muted)}
+    .deck{display:grid;gap:14px}.initiative{background:rgba(255,255,255,.94);border:1px solid rgba(217,228,239,.95);border-radius:19px;padding:18px;box-shadow:0 10px 22px rgba(4,31,65,.08);transition:transform .22s ease,box-shadow .22s ease,border-color .22s ease;position:relative}
+    .initiative:nth-child(2){transform:translateX(6px)}.initiative:nth-child(3){transform:translateX(-4px)}.initiative:hover{transform:translateY(-6px) scale(1.01);box-shadow:0 18px 32px rgba(4,31,65,.13);border-color:#b9cde0}.initiative:nth-child(2):hover,.initiative:nth-child(3):hover{transform:translateY(-6px) scale(1.01)}
+    .tagrow{display:flex;justify-content:space-between;gap:10px;align-items:center;margin-bottom:10px}.tag{display:inline-flex;align-items:center;gap:6px;border-radius:999px;padding:6px 9px;font-size:.7rem;font-weight:850;letter-spacing:.035em;text-transform:uppercase;background:var(--mist);border:1px solid var(--line)}.source-chip{text-decoration:none;font-size:.69rem;font-weight:850;color:var(--wm-blue);border:1px solid #bddaf2;padding:5px 8px;border-radius:999px;background:white}
+    .initiative h4{margin:0 0 8px;font-size:1.02rem;line-height:1.2;letter-spacing:-.018em}.initiative p{margin:0;color:var(--ink-2);font-size:.85rem}.metric{margin-top:13px;border-top:1px dashed var(--line);padding-top:11px;display:flex;gap:8px;align-items:flex-start;font-size:.78rem;color:var(--muted)}.metric b{color:var(--ink)}.metric .dot{width:7px;height:7px;border-radius:50%;background:var(--wm-yellow);margin-top:6px;flex:0 0 auto}
+    .dependency-strip{margin:28px 0 0;background:var(--ink);color:white;border-radius:24px;padding:22px;box-shadow:var(--shadow)}.dep-title{display:flex;align-items:center;justify-content:space-between;gap:18px;margin-bottom:14px}.dep-title h3{margin:0;font-size:1.15rem}.dep-title span{color:#b9c9d9;font-size:.78rem}.dep-flow{display:grid;grid-template-columns:repeat(5,1fr);gap:10px}.dep-pill{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);border-radius:16px;padding:13px;font-size:.75rem;color:#dce7f2}.dep-pill strong{display:block;color:white;font-size:.8rem;margin-bottom:4px}.dep-arrow{color:var(--wm-yellow);font-weight:900}
+    .rationale-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}.rationale{background:white;border:1px solid var(--line);border-radius:20px;padding:20px;box-shadow:var(--shadow-soft)}.rationale h3{margin:0 0 10px;font-size:1.05rem}.rationale p{margin:0;font-size:.86rem;color:var(--ink-2)}.rationale.crawl{border-top:4px solid var(--wm-blue)}.rationale.walk{border-top:4px solid var(--wm-yellow)}.rationale.run{border-top:4px solid var(--ink)}
+    details{background:white;border:1px solid var(--line);border-radius:20px;box-shadow:var(--shadow-soft);overflow:hidden}summary{list-style:none;cursor:pointer;padding:18px 20px;font-weight:850;display:flex;align-items:center;justify-content:space-between;gap:16px}summary::-webkit-details-marker{display:none}summary::after{content:"+";width:28px;height:28px;border-radius:50%;display:grid;place-items:center;background:var(--sky);color:var(--wm-blue)}details[open] summary::after{content:"–"}.source-list{padding:0 20px 18px;display:grid;gap:10px}.source-item{display:grid;grid-template-columns:44px 1fr auto;gap:12px;align-items:start;padding:12px 0;border-top:1px solid var(--line)}.source-id{font-weight:900;color:var(--wm-blue)}.source-item b{display:block;font-size:.85rem;margin-bottom:3px}.source-item span{color:var(--muted);font-size:.76rem}.source-item a{text-decoration:none;font-weight:800;color:var(--wm-blue);font-size:.76rem;padding:7px 10px;border:1px solid #bddaf2;border-radius:999px;white-space:nowrap}
+    .footer{margin:64px 0 34px;padding:24px 0 0;border-top:1px solid var(--line);display:flex;justify-content:space-between;gap:18px;color:var(--muted);font-size:.78rem}
+    @media(max-width:980px){.hero-grid{grid-template-columns:1fr}.hero-stat{max-width:420px}.phase-decks,.rationale-grid{grid-template-columns:1fr}.dep-flow{grid-template-columns:1fr 1fr}.microstats{grid-template-columns:1fr 1fr}}
+    @media(max-width:620px){.shell{width:min(100% - 22px,1180px)}.nav{align-items:flex-start;padding:12px 0}.navlinks{display:none}.hero{padding-top:46px}.microstats{grid-template-columns:1fr 1fr}.dep-flow{grid-template-columns:1fr}.section-head{align-items:flex-start;flex-direction:column}.source-item{grid-template-columns:38px 1fr}.source-item a{grid-column:2;justify-self:start}.footer{flex-direction:column}}
+    @media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important}.initiative{transition:none}.initiative:hover{transform:none}}
+  </style>
 </head>
 <body>
-    <h1>Walmart Transformation Roadmap</h1>
-    <p>Member A — Roadmap Sequencer</p>
-    <p>Work in progress.</p>
+  <header class="topbar">
+    <div class="shell nav">
+      <a class="brand" href="index.html" aria-label="Go to About Us">
+        <div class="brand-mark" aria-hidden="true"><div class="spark">✳</div></div>
+        <div class="brand-copy"><strong>Walmart Transformation Portfolio</strong><span>ISM 6346 · Group 9</span></div>
+      </a>
+      <nav class="navlinks" aria-label="Site navigation">
+        <a href="index.html">About Us</a><a href="roadmap.html" aria-current="page">Roadmap</a><a href="raci.html">RACI</a><a href="dashboard.html">QBR Dashboard</a>
+      </nav>
+    </div>
+  </header>
+  <main class="shell">
+    <section class="hero" id="top">
+      <div class="hero-grid">
+        <div>
+          <div class="eyebrow">Member A · Roadmap Sequencer</div>
+          <h1>From network foundation to scaled fulfillment.</h1>
+          <p>Walmart’s U.S. supply-chain and omnichannel transformation, sequenced as <strong>Crawl → Walk → Run</strong> to make the dependency logic visible at a glance.</p>
+          <div class="hero-note"><strong>Case scope:</strong> 2022–2025. Initiative facts and outcomes come from Walmart public disclosures; phase placement, quarter ranges, and dependency logic are our course analysis.</div>
+        </div>
+        <aside class="hero-stat" aria-label="Roadmap summary"><div class="number">8</div><div class="label">initiatives across 3 phases</div><div class="meta">Built around explicit capability dependencies, not simple chronology.</div></aside>
+      </div>
+      <div class="microstats" aria-label="Roadmap quick facts"><div class="microstat"><strong>3</strong><span>Crawl foundations</span></div><div class="microstat"><strong>3</strong><span>Walk deployments</span></div><div class="microstat"><strong>2</strong><span>Run scale initiatives</span></div><div class="microstat"><strong>5</strong><span>explicit dependency links</span></div></div>
+    </section>
+
+    <section id="roadmap">
+      <div class="section-head"><div><div class="eyebrow">Transformation roadmap</div><h2>Three floating decks. One connected journey.</h2></div><p>Blue builds the operating foundation, Spark Yellow marks bounded deployment, and deep navy represents enterprise-scale execution.</p></div>
+      <div class="phase-decks">
+        <article class="phase crawl"><div class="phase-head"><div class="phase-kicker">Phase 1 · Q1–Q4</div><h3>Crawl</h3><div class="phase-sub">Build the execution foundation</div></div><div class="deck">
+          <div class="initiative"><div class="tagrow"><span class="tag">C1 · Q1–Q4</span><a class="source-chip" href="#S1">S1</a></div><h4>Regional Distribution Center Automation</h4><p>High-tech RDC modernization using AI-powered software, robotics, and automation, creating the store-replenishment layer later initiatives can operate on.</p><div class="metric"><span class="dot"></span><span><b>Creates:</b> automated regional distribution capacity</span></div></div>
+          <div class="initiative"><div class="tagrow"><span class="tag">C2 · Q1–Q4</span><a class="source-chip" href="#S2">S2</a></div><h4>Next-Generation eCommerce Fulfillment Centers</h4><p>People, robotics, and machine learning reduce the fulfillment flow from 12 manual steps to five, while the design targets roughly double storage capacity and daily order throughput.</p><div class="metric"><span class="dot"></span><span><b>Creates:</b> high-density automated eCommerce fulfillment</span></div></div>
+          <div class="initiative"><div class="tagrow"><span class="tag">C3 · Q2–Q4</span><a class="source-chip" href="#S3">S3</a></div><h4>Store-Based Market Fulfillment / Alphabot</h4><p>A Market Fulfillment Center inside a Bentonville store uses Walmart’s proprietary Alphabot storage-and-retrieval system to support pickup and delivery.</p><div class="metric"><span class="dot"></span><span><b>Creates:</b> automated local fulfillment inside stores</span></div></div>
+        </div></article>
+
+        <article class="phase walk"><div class="phase-head"><div class="phase-kicker">Phase 2 · Q5–Q8</div><h3>Walk</h3><div class="phase-sub">Apply the foundation in limited production</div></div><div class="deck">
+          <div class="initiative"><div class="tagrow"><span class="tag">W1 · Depends C1+C2</span><a class="source-chip" href="#S4">S4</a></div><h4>AI-Powered Inventory Positioning</h4><p>Regional demand signals are used to position and reposition inventory, applying predictive intelligence to the automated network built in Crawl.</p><div class="metric"><span class="dot"></span><span><b>Readiness signal:</b> inventory moves can be executed reliably through the automated network</span></div></div>
+          <div class="initiative"><div class="tagrow"><span class="tag">W2 · Depends C2+C3</span><a class="source-chip" href="#S5">S5</a></div><h4>Parcel Stations / Store Delivery Nodes</h4><p>eCommerce packages flow from fulfillment centers through stores into the last-mile network. Walmart planned more than 40 parcel stations by the end of 2023.</p><div class="metric"><span class="dot"></span><span><b>Readiness signal:</b> local delivery density expands through store-based nodes</span></div></div>
+          <div class="initiative"><div class="tagrow"><span class="tag">W3 · Depends C1</span><a class="source-chip" href="#S6">S6</a></div><h4>Autonomous Materials Handling</h4><p>After a 16-month proof of concept, Walmart announced 19 autonomous forklifts across four high-tech distribution centers.</p><div class="metric"><span class="dot"></span><span><b>Published scale signal:</b> 19 autonomous forklifts across four high-tech DCs</span></div></div>
+        </div></article>
+
+        <article class="phase run"><div class="phase-head"><div class="phase-kicker">Phase 3 · Q9–Q12+</div><h3>Run</h3><div class="phase-sub">Extend proven capabilities across the network</div></div><div class="deck">
+          <div class="initiative"><div class="tagrow"><span class="tag">R1 · Scales W1+W3</span><a class="source-chip" href="#S7">S7</a></div><h4>Grocery Distribution Network Automation at Scale</h4><p>Walmart extends intelligent software and automation into five new high-tech perishable DCs, four major expansions, and a retrofit. The high-tech design can store twice the cases and process more than twice the volume of a traditional perishable DC.</p><div class="metric"><span class="dot"></span><span><b>Org change:</b> retrain and redeploy associates into technology-enabled operating roles</span></div></div>
+          <div class="initiative"><div class="tagrow"><span class="tag">R2 · Scales W2</span><a class="source-chip" href="#S8">S8</a></div><h4>Geospatial Delivery Optimization & Same-Day Expansion</h4><p>Advanced geospatial optimization improves delivery boundaries and coordinates store coverage. Walmart said the platform expanded delivery access to 12 million additional U.S. households.</p><div class="metric"><span class="dot"></span><span><b>Org change:</b> coordinate local fulfillment around shared routing and capacity rules</span></div></div>
+        </div></article>
+      </div>
+      <div class="dependency-strip"><div class="dep-title"><h3>Dependency logic</h3><span>Each arrow names what the later initiative relies on.</span></div><div class="dep-flow">
+        <div class="dep-pill"><strong>C1 <span class="dep-arrow">→</span> W3</strong>High-tech DC environment enables autonomous materials handling.</div>
+        <div class="dep-pill"><strong>C1 + C2 <span class="dep-arrow">→</span> W1</strong>Automated capacity provides the execution layer for AI-directed inventory movement.</div>
+        <div class="dep-pill"><strong>C2 + C3 <span class="dep-arrow">→</span> W2</strong>FC capacity plus store-based fulfillment supports parcel-station delivery flow.</div>
+        <div class="dep-pill"><strong>W1 + W3 <span class="dep-arrow">→</span> R1</strong>Proven decision automation and high-tech DC operations scale into grocery.</div>
+        <div class="dep-pill"><strong>W2 <span class="dep-arrow">→</span> R2</strong>Store delivery nodes become inputs to broader geospatial delivery optimization.</div>
+      </div></div>
+    </section>
+
+    <section id="rationales"><div class="section-head"><div><div class="eyebrow">Why this sequence</div><h2>Capability first. Proof second. Scale last.</h2></div><p>The phase logic is intentionally dependency-driven rather than a simple timeline.</p></div><div class="rationale-grid">
+      <article class="rationale crawl"><h3>Crawl · Foundation</h3><p>The Crawl phase establishes three complementary execution layers: automated regional distribution for store replenishment, automated eCommerce fulfillment for shipped orders, and automated store-based fulfillment for pickup and local delivery. Walmart’s public disclosures show each layer increasing capacity, speed, accuracy, or digital fulfillment capability through robotics, machine learning, automation, and proprietary fulfillment technology. Placing these initiatives first gives later initiatives somewhere to act: AI can reposition inventory into a capable network, parcel stations can use stores as delivery nodes, and autonomous equipment can operate inside high-tech distribution centers.</p></article>
+      <article class="rationale walk"><h3>Walk · Deployment</h3><p>The Walk phase applies the foundation to limited production use cases that can produce evidence before broader rollout. AI-powered inventory positioning tests whether demand signals can improve where inventory is placed. Parcel stations test whether fulfillment-center volume can flow through stores into the last mile at greater density. Autonomous forklifts provide a clear pilot-to-deployment pattern: Walmart moved from a 16-month proof of concept to 19 units across four high-tech distribution centers. Together, these initiatives test decision automation, local-delivery integration, and human-machine operations before enterprise-wide scale.</p></article>
+      <article class="rationale run"><h3>Run · Scale</h3><p>The Run phase scales proven capabilities across larger networks. Walmart’s grocery transformation extends intelligent software and automation into new builds, expansions, and a retrofit, while the geospatial delivery platform broadens same-day delivery coverage using more precise data-driven boundaries. These initiatives also require organizational change: associates move into technology-enabled operating roles, facilities adopt standardized automated workflows, and local fulfillment must coordinate across store capacity and delivery routing. The published outcomes—higher grocery throughput and 12 million additional households gaining delivery access—make the scale logic measurable.</p></article>
+    </div></section>
+
+    <section id="sources"><div class="section-head"><div><div class="eyebrow">Evidence</div><h2>Primary sources, kept out of the way until you need them.</h2></div><p>All initiative facts are tied to accessible Walmart public disclosures from 2022–2025.</p></div>
+      <details><summary>Open source log</summary><div class="source-list">
+        <div class="source-item" id="S1"><div class="source-id">S1</div><div><b>Regional Distribution Center Automation</b><span>Walmart Transforms Regional Distribution Center in Palestine, Texas into High-Tech Facility · Oct. 26, 2022</span></div><a href="https://corporate.walmart.com/news/2022/10/26/walmart-transforms-regional-distribution-center-in-palestine-texas-into-high-tech-facility" target="_blank" rel="noopener">Open</a></div>
+        <div class="source-item" id="S2"><div class="source-id">S2</div><div><b>Next-Generation Fulfillment Centers</b><span>A New Era of Fulfillment: Introducing Walmart’s Next Generation Fulfillment Centers · June 3, 2022</span></div><a href="https://corporate.walmart.com/news/2022/06/03/a-new-era-of-fulfillment-introducing-walmarts-next-generation-fulfillment-centers" target="_blank" rel="noopener">Open</a></div>
+        <div class="source-item" id="S3"><div class="source-id">S3</div><div><b>Market Fulfillment / Alphabot</b><span>Walmart Opens First Market Fulfillment Center in Arkansas as the Retailer Doubles Down on Store Fulfillment · May 22, 2023</span></div><a href="https://corporate.walmart.com/news/2023/05/22/walmart-opens-first-market-fulfillment-center-in-arkansas-as-the-retailer-doubles-down-on-store-fulfillment" target="_blank" rel="noopener">Open</a></div>
+        <div class="source-item" id="S4"><div class="source-id">S4</div><div><b>AI-Powered Inventory Positioning</b><span>The Season of More: Unwrapping Our Plan for Speed, Accuracy and Availability · Oct. 31, 2023</span></div><a href="https://corporate.walmart.com/news/2023/10/31/the-season-of-more-unwrapping-our-plan-for-speed-accuracy-and-availability" target="_blank" rel="noopener">Open</a></div>
+        <div class="source-item" id="S5"><div class="source-id">S5</div><div><b>Parcel Stations</b><span>Walmart Introduces Parcel Stations To Speed Up Delivery · Nov. 21, 2023</span></div><a href="https://corporate.walmart.com/news/2023/11/21/walmart-introduces-parcel-stations-to-speed-up-delivery" target="_blank" rel="noopener">Open</a></div>
+        <div class="source-item" id="S6"><div class="source-id">S6</div><div><b>Autonomous Materials Handling</b><span>A Fork in the Road: Walmart Bets on Associates, Automation · Apr. 11, 2024</span></div><a href="https://corporate.walmart.com/news/2024/04/11/a-fork-in-the-road-walmart-bets-on-associates-automation" target="_blank" rel="noopener">Open</a></div>
+        <div class="source-item" id="S7"><div class="source-id">S7</div><div><b>Grocery Network Automation</b><span>Walmart’s Grocery Network Transformation: The Next Steps on Our Supply Chain Modernization Journey · July 10, 2024</span></div><a href="https://corporate.walmart.com/news/2024/07/10/walmarts-grocery-network-transformation-the-next-steps-on-our-supply-chain-modernization-journey" target="_blank" rel="noopener">Open</a></div>
+        <div class="source-item" id="S8"><div class="source-id">S8</div><div><b>Geospatial Delivery Optimization</b><span>Serving More Customers, Delivering Greater Convenience: Walmart’s Data-Driven Approach Expands Delivery to 12 Million More Households · Apr. 16, 2025</span></div><a href="https://corporate.walmart.com/news/2025/04/16/serving-more-customers-delivering-greater-convenience-walmarts-data-driven-approach-expands-delivery-to-12-million-more-households" target="_blank" rel="noopener">Open</a></div>
+        <div class="source-item" id="S9"><div class="source-id">S9</div><div><b>Transformation framing / connected network</b><span>Walmart Outlines Growth Strategy, Unveils Next Generation Supply Chain at 2023 Investment Community Meeting · Apr. 4, 2023</span></div><a href="https://corporate.walmart.com/news/2023/04/04/walmart-outlines-growth-strategy-unveils-next-generation-supply-chain-at-2023-investment-community-meeting" target="_blank" rel="noopener">Open</a></div>
+      </div></details>
+    </section>
+    <footer class="footer"><span>Member A · Roadmap Sequencer · Group 9</span><span>Walmart-inspired palette: True Blue, Spark Yellow, White. Neutral navy is used for dense text readability.</span></footer>
+  </main>
 </body>
 </html>
