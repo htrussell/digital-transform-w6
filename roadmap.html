@@ -740,6 +740,21 @@
 
     .source-row:last-child { border-bottom: 0; }
 
+    .source-row.evidence-sec {
+      background: color-mix(in srgb, #FFC220 6%, var(--surface));
+      border-bottom-color: color-mix(in srgb, #FFC220 35%, var(--line));
+    }
+
+    .source-row.evidence-investor {
+      background: color-mix(in srgb, #0071CE 5%, var(--surface));
+      border-bottom-color: color-mix(in srgb, #0071CE 30%, var(--line));
+    }
+
+    .source-row.evidence-initiative {
+      background: color-mix(in srgb, #8FA9C1 8%, var(--surface));
+      border-bottom-color: color-mix(in srgb, #8FA9C1 36%, var(--line));
+    }
+
     .source-id {
       color: var(--blue);
       font-weight: 900;
@@ -767,6 +782,21 @@
       padding: 6px 9px;
       background: var(--surface-solid);
     }
+
+    .source-row.evidence-sec .source-id,
+    .source-row.evidence-sec b,
+    .source-row.evidence-sec a { color: #FFC220; }
+    .source-row.evidence-sec a { border-color: color-mix(in srgb, #FFC220 60%, var(--line)); }
+
+    .source-row.evidence-investor .source-id,
+    .source-row.evidence-investor b,
+    .source-row.evidence-investor a { color: #0071CE; }
+    .source-row.evidence-investor a { border-color: color-mix(in srgb, #0071CE 55%, var(--line)); }
+
+    .source-row.evidence-initiative .source-id,
+    .source-row.evidence-initiative b,
+    .source-row.evidence-initiative a { color: #8FA9C1; }
+    .source-row.evidence-initiative a { border-color: color-mix(in srgb, #8FA9C1 60%, var(--line)); }
 
     footer {
       padding: 22px 0 34px;
@@ -868,8 +898,7 @@
             <div class="deck-icon">C</div>
             <h2>Crawl</h2>
             <p>
-              Three capability-building initiatives establish automated regional distribution,
-              eCommerce fulfillment, and store-based fulfillment.
+              &#x20; Build the automated distribution, eCommerce, and store-fulfillment foundation.
             </p>
           </div>
 
@@ -884,8 +913,7 @@
             <div class="deck-icon">W</div>
             <h2>Walk</h2>
             <p>
-              Three bounded production deployments test AI-directed inventory,
-              store delivery nodes, and autonomous materials handling.
+              &#x20; Test AI inventory positioning, store delivery nodes, and autonomous handling in limited production.
             </p>
           </div>
 
@@ -900,8 +928,7 @@
             <div class="deck-icon">R</div>
             <h2>Run</h2>
             <p>
-              Two initiatives extend proven automation and delivery capabilities
-              across broader Walmart networks.
+              &#x20; Scale proven automation and delivery capabilities across Walmart’s network.
             </p>
           </div>
 
@@ -916,8 +943,7 @@
             <div class="deck-icon">↗</div>
             <h2>Dependencies</h2>
             <p>
-              Five explicit links explain why a later initiative depends on
-              capabilities established in an earlier phase.
+              &#x20; Show which earlier capabilities each later initiative requires.
             </p>
           </div>
 
@@ -940,115 +966,243 @@
     </section>
 
     <section id="sources">
-      <div class="section-head">
+  <div class="section-head">
+    <div>
+      <div class="eyebrow">Evidence</div>
+      <h2>Primary evidence, one click away.</h2>
+    </div>
+
+  </div>
+
+  <details>
+    <summary
+      aria-label="Toggle Walmart source log"
+      title="Walmart source log"
+    >
+      <svg
+        aria-hidden="true"
+        viewBox="0 0 24 24"
+        width="24"
+        height="24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="1.8"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      >
+        <path d="m12 3 9 5-9 5-9-5 9-5Z" />
+        <path d="m3 12 9 5 9-5" />
+        <path d="m3 16 9 5 9-5" />
+      </svg>
+    </summary>
+
+    <div class="source-list">
+
+      <!-- =====================================================
+           CORE SEC FILINGS
+           ===================================================== -->
+
+      <div class="source-row evidence-sec">
+        <div class="source-id">SEC</div>
+
         <div>
-          <div class="eyebrow">Evidence</div>
-          <h2>Primary sources, one click away.</h2>
+          <b>Core corporate filings</b>
+
+          <span>
+            Enterprise-level evidence for Walmart’s supply-chain automation,
+            omnichannel infrastructure, technology investment, and AI use.
+          </span>
+
+          <div
+            style="
+              display:flex;
+              flex-wrap:wrap;
+              gap:8px;
+              margin-top:9px;
+            "
+          >
+            <a
+              target="_blank"
+              rel="noopener"
+              href="https://www.sec.gov/Archives/edgar/data/104169/000010416923000020/wmt-20230131.htm"
+            >
+              2023 10-K
+            </a>
+
+            <a
+              target="_blank"
+              rel="noopener"
+              href="https://www.sec.gov/Archives/edgar/data/104169/000010416924000056/wmt-20240131.htm"
+            >
+              2024 10-K
+            </a>
+
+            <a
+              target="_blank"
+              rel="noopener"
+              href="https://www.sec.gov/Archives/edgar/data/104169/000010416925000021/wmt-20250131.htm"
+            >
+              2025 10-K
+            </a>
+
+            <a
+              target="_blank"
+              rel="noopener"
+              href="https://www.sec.gov/Archives/edgar/data/104169/000010416925000055/wmt-20250424.htm"
+            >
+              2025 Proxy
+            </a>
+          </div>
         </div>
       </div>
 
-      <details>
-        <summary aria-label="Toggle Walmart source log" title="Walmart source log">
-          <svg aria-hidden="true" viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-            <path d="m12 3 9 5-9 5-9-5 9-5Z" />
-            <path d="m3 12 9 5 9-5" />
-            <path d="m3 16 9 5 9-5" />
-          </svg>
-        </summary>
 
-        <div class="source-list">
-          <div class="source-row">
-            <div class="source-id">S1</div>
-            <div>
-              <b>Regional Distribution Center Automation</b>
-              <span>Walmart · Oct. 26, 2022</span>
-            </div>
-            <a target="_blank" rel="noopener"
-               href="https://corporate.walmart.com/news/2022/10/26/walmart-transforms-regional-distribution-center-in-palestine-texas-into-high-tech-facility">Open</a>
-          </div>
+      <!-- =====================================================
+           INVESTOR MATERIALS
+           ===================================================== -->
 
-          <div class="source-row">
-            <div class="source-id">S2</div>
-            <div>
-              <b>Next-Generation Fulfillment Centers</b>
-              <span>Walmart · June 3, 2022</span>
-            </div>
-            <a target="_blank" rel="noopener"
-               href="https://corporate.walmart.com/news/2022/06/03/a-new-era-of-fulfillment-introducing-walmarts-next-generation-fulfillment-centers">Open</a>
-          </div>
+      <div class="source-row evidence-investor">
+        <div class="source-id">ICM</div>
 
-          <div class="source-row">
-            <div class="source-id">S3</div>
-            <div>
-              <b>Market Fulfillment / Alphabot</b>
-              <span>Walmart · May 22, 2023</span>
-            </div>
-            <a target="_blank" rel="noopener"
-               href="https://corporate.walmart.com/news/2023/05/22/walmart-opens-first-market-fulfillment-center-in-arkansas-as-the-retailer-doubles-down-on-store-fulfillment">Open</a>
-          </div>
+        <div>
+          <b>Investor evidence</b>
 
-          <div class="source-row">
-            <div class="source-id">S4</div>
-            <div>
-              <b>AI-Powered Inventory Positioning</b>
-              <span>Walmart · Oct. 31, 2023</span>
-            </div>
-            <a target="_blank" rel="noopener"
-               href="https://corporate.walmart.com/news/2023/10/31/the-season-of-more-unwrapping-our-plan-for-speed-accuracy-and-availability">Open</a>
-          </div>
+          <span>
+            Management discussion of the connected, automated supply chain and
+            the later scaling of fulfillment and delivery capabilities.
+          </span>
 
-          <div class="source-row">
-            <div class="source-id">S5</div>
-            <div>
-              <b>Parcel Stations</b>
-              <span>Walmart · Nov. 21, 2023</span>
-            </div>
-            <a target="_blank" rel="noopener"
-               href="https://corporate.walmart.com/news/2023/11/21/walmart-introduces-parcel-stations-to-speed-up-delivery">Open</a>
-          </div>
+          <div
+            style="
+              display:flex;
+              flex-wrap:wrap;
+              gap:8px;
+              margin-top:9px;
+            "
+          >
+            <a
+              target="_blank"
+              rel="noopener"
+              href="https://corporate.walmart.com/content/dam/corporate/documents/newsroom/events/2023-investment-community-meeting/walmart-2023-investment-community-meeting-day-2-analyst-q-a-transcript.pdf"
+            >
+              S9 · 2023 ICM
+            </a>
 
-          <div class="source-row">
-            <div class="source-id">S6</div>
-            <div>
-              <b>Autonomous Materials Handling</b>
-              <span>Walmart · Apr. 11, 2024</span>
-            </div>
-            <a target="_blank" rel="noopener"
-               href="https://corporate.walmart.com/news/2024/04/11/a-fork-in-the-road-walmart-bets-on-associates-automation">Open</a>
-          </div>
-
-          <div class="source-row">
-            <div class="source-id">S7</div>
-            <div>
-              <b>Grocery Network Automation</b>
-              <span>Walmart · July 10, 2024</span>
-            </div>
-            <a target="_blank" rel="noopener"
-               href="https://corporate.walmart.com/news/2024/07/10/walmarts-grocery-network-transformation-the-next-steps-on-our-supply-chain-modernization-journey">Open</a>
-          </div>
-
-          <div class="source-row">
-            <div class="source-id">S8</div>
-            <div>
-              <b>Geospatial Delivery Optimization</b>
-              <span>Walmart · Apr. 16, 2025</span>
-            </div>
-            <a target="_blank" rel="noopener"
-               href="https://corporate.walmart.com/news/2025/04/16/serving-more-customers-delivering-greater-convenience-walmarts-data-driven-approach-expands-delivery-to-12-million-more-households">Open</a>
-          </div>
-
-          <div class="source-row">
-            <div class="source-id">S9</div>
-            <div>
-              <b>2023 Transformation / Connected Network Framing</b>
-              <span>Walmart · Apr. 4, 2023</span>
-            </div>
-            <a target="_blank" rel="noopener"
-               href="https://corporate.walmart.com/news/2023/04/04/walmart-outlines-growth-strategy-unveils-next-generation-supply-chain-at-2023-investment-community-meeting">Open</a>
+            <a
+              target="_blank"
+              rel="noopener"
+              href="https://corporate.walmart.com/content/dam/corporate/documents/newsroom/events/walmart-investment-community-meeting-and-q-and-a-session/icm-2025-prepared-remarks-and-q-and-a.pdf"
+            >
+              2025 ICM
+            </a>
           </div>
         </div>
-      </details>
-    </section>
+      </div>
+
+
+      <!-- =====================================================
+           INITIATIVE-SPECIFIC SOURCES
+           ===================================================== -->
+
+      <div class="source-row evidence-initiative">
+        <div class="source-id">S1–S8</div>
+
+        <div>
+          <b>Initiative-level evidence</b>
+
+          <span>
+            Walmart disclosures used for specific rollout details, pilot counts,
+            operating results, and individual technologies.
+          </span>
+
+          <div
+            style="
+              display:flex;
+              flex-wrap:wrap;
+              gap:8px;
+              margin-top:9px;
+            "
+          >
+
+            <a
+              target="_blank"
+              rel="noopener"
+              href="https://corporate.walmart.com/news/2022/10/26/walmart-transforms-regional-distribution-center-in-palestine-texas-into-high-tech-facility"
+              title="Regional Distribution Center Automation"
+            >
+              S1 · RDC Automation
+            </a>
+
+            <a
+              target="_blank"
+              rel="noopener"
+              href="https://corporate.walmart.com/news/2022/06/03/a-new-era-of-fulfillment-introducing-walmarts-next-generation-fulfillment-centers"
+              title="Next-Generation eCommerce Fulfillment Centers"
+            >
+              S2 · Fulfillment Centers
+            </a>
+
+            <a
+              target="_blank"
+              rel="noopener"
+              href="https://corporate.walmart.com/news/2023/05/22/walmart-opens-first-market-fulfillment-center-in-arkansas-as-the-retailer-doubles-down-on-store-fulfillment"
+              title="Market Fulfillment / Alphabot"
+            >
+              S3 · Alphabot
+            </a>
+
+            <a
+              target="_blank"
+              rel="noopener"
+              href="https://corporate.walmart.com/news/2023/10/31/the-season-of-more-unwrapping-our-plan-for-speed-accuracy-and-availability"
+              title="AI-Powered Inventory Positioning"
+            >
+              S4 · AI Inventory
+            </a>
+
+            <a
+              target="_blank"
+              rel="noopener"
+              href="https://corporate.walmart.com/news/2023/11/21/walmart-introduces-parcel-stations-to-speed-up-delivery"
+              title="Parcel Stations / Store Delivery Nodes"
+            >
+              S5 · Parcel Stations
+            </a>
+
+            <a
+              target="_blank"
+              rel="noopener"
+              href="https://corporate.walmart.com/news/2024/04/11/a-fork-in-the-road-walmart-bets-on-associates-automation"
+              title="Autonomous Materials Handling"
+            >
+              S6 · Autonomous Handling
+            </a>
+
+            <a
+              target="_blank"
+              rel="noopener"
+              href="https://corporate.walmart.com/news/2024/07/10/walmarts-grocery-network-transformation-the-next-steps-on-our-supply-chain-modernization-journey"
+              title="Grocery Distribution Network Automation"
+            >
+              S7 · Grocery Automation
+            </a>
+
+            <a
+              target="_blank"
+              rel="noopener"
+              href="https://corporate.walmart.com/news/2025/04/16/serving-more-customers-delivering-greater-convenience-walmarts-data-driven-approach-expands-delivery-to-12-million-more-households"
+              title="Geospatial Delivery Optimization"
+            >
+              S8 · Delivery Optimization
+            </a>
+
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </details>
+</section>
 
     <footer>
       <span>Walmart U.S. supply chain case · 2022–2025</span>
