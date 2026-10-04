@@ -195,13 +195,19 @@
       gap: 6px;
     }
 
-    .navlinks a {
+    .navlinks a,
+    .navlinks .nav-placeholder {
       text-decoration: none;
       color: var(--text-2);
       font-size: .83rem;
       font-weight: 750;
       padding: 9px 11px;
       border-radius: 999px;
+    }
+
+    .navlinks .nav-placeholder {
+      color: var(--muted);
+      cursor: default;
     }
 
     .navlinks a:hover,
@@ -829,7 +835,10 @@
 
       <div class="nav-right">
         <nav class="navlinks">
+          <span class="nav-placeholder">About Us</span>
           <a class="active" href="roadmap.html">Roadmap</a>
+          <span class="nav-placeholder">RACI</span>
+          <span class="nav-placeholder">QBR Dashboard</span>
         </nav>
 
         <button class="theme-toggle" id="themeToggle" type="button" aria-label="Toggle light and dark mode">
