@@ -708,7 +708,7 @@
       background: var(--surface);
       box-shadow: var(--shadow-soft);
       backdrop-filter: blur(15px);
-      overflow: hidden;
+      overflow: visible;
     }
 
     summary {
@@ -724,9 +724,103 @@
 
     summary::-webkit-details-marker { display: none; }
 
+    details > summary svg {
+      color: var(--text);
+      overflow: visible;
+      transition: color .25s ease, filter .25s ease, transform .25s ease;
+    }
+
+    details:hover > summary svg,
+    details:focus-within > summary svg {
+      color: #FFC220;
+      filter: drop-shadow(0 0 8px color-mix(in srgb, #FFC220 78%, transparent));
+      transform: scale(1.05);
+    }
+
+    details > summary svg .stack-layer {
+      transform-box: fill-box;
+      transform-origin: center;
+      will-change: transform;
+    }
+
+    /* Horizontal positions:
+       whole wave is shifted left 37px to stay inside the source-log box */
+    details > summary svg .stack-layer:nth-child(1) { --x: -77px; }
+    details > summary svg .stack-layer:nth-child(2) { --x: -37px; }
+    details > summary svg .stack-layer:nth-child(3) { --x: 3px; }
+
+    /* All three begin at EXACTLY the same time.
+       Different keyframe shapes create the traveling wave — no delays/stagger. */
+    details:hover > summary svg .stack-layer:nth-child(1),
+    details:focus-within > summary svg .stack-layer:nth-child(1) {
+      animation: stack-wave-1 1.7s cubic-bezier(.37, 0, .63, 1) both;
+    }
+
+    details:hover > summary svg .stack-layer:nth-child(2),
+    details:focus-within > summary svg .stack-layer:nth-child(2) {
+      animation: stack-wave-2 1.7s cubic-bezier(.37, 0, .63, 1) both;
+    }
+
+    details:hover > summary svg .stack-layer:nth-child(3),
+    details:focus-within > summary svg .stack-layer:nth-child(3) {
+      animation: stack-wave-3 1.7s cubic-bezier(.37, 0, .63, 1) both;
+    }
+
+    /* LEFT LAYER:
+       rises first, then smoothly falls back as the crest travels right */
+    @keyframes stack-wave-1 {
+      0%   { transform: translate(0, 0); }
+      12%  { transform: translate(var(--x), 0); }
+      25%  { transform: translate(var(--x), -22px); }
+      38%  { transform: translate(var(--x), -14px); }
+      51%  { transform: translate(var(--x), -5px); }
+      64%  { transform: translate(var(--x), 0); }
+      82%  { transform: translate(var(--x), 0); }
+      100% { transform: translate(0, 0); }
+    }
+
+    /* CENTER LAYER:
+       begins moving immediately, reaches the crest after the left layer */
+    @keyframes stack-wave-2 {
+      0%   { transform: translate(0, 0); }
+      12%  { transform: translate(var(--x), 0); }
+      25%  { transform: translate(var(--x), -10px); }
+      38%  { transform: translate(var(--x), -22px); }
+      51%  { transform: translate(var(--x), -14px); }
+      64%  { transform: translate(var(--x), -5px); }
+      72%  { transform: translate(var(--x), 0); }
+      82%  { transform: translate(var(--x), 0); }
+      100% { transform: translate(0, 0); }
+    }
+
+    /* RIGHT LAYER:
+       begins moving immediately and receives the crest last */
+    @keyframes stack-wave-3 {
+      0%   { transform: translate(0, 0); }
+      12%  { transform: translate(var(--x), 0); }
+      25%  { transform: translate(var(--x), -3px); }
+      38%  { transform: translate(var(--x), -10px); }
+      51%  { transform: translate(var(--x), -22px); }
+      64%  { transform: translate(var(--x), -14px); }
+      72%  { transform: translate(var(--x), -5px); }
+      78%  { transform: translate(var(--x), 0); }
+      82%  { transform: translate(var(--x), 0); }
+      100% { transform: translate(0, 0); }
+    }
+
+    /* Keep reduced-motion behavior */
+    @media (prefers-reduced-motion: reduce) {
+      details:hover > summary svg .stack-layer,
+      details:focus-within > summary svg .stack-layer {
+        animation: none !important;
+      }
+    }
+
     .source-list {
       border-top: 1px solid var(--line);
       padding: 8px 20px 18px;
+      border-radius: 0 0 20px 20px;
+      overflow: hidden;
     }
 
     .source-row {
@@ -840,6 +934,7 @@
       .deck-card { transition: none; }
       .deck-card:hover,
       .deck-card:focus-visible { animation: none; }
+      details > summary svg .stack-layer { animation: none !important; }
     }
   </style>
 </head>
@@ -990,9 +1085,9 @@
         stroke-linecap="round"
         stroke-linejoin="round"
       >
-        <path d="m12 3 9 5-9 5-9-5 9-5Z" />
-        <path d="m3 12 9 5 9-5" />
-        <path d="m3 16 9 5 9-5" />
+        <g class="stack-layer"><path d="m12 3 9 5-9 5-9-5 9-5Z" /></g>
+        <g class="stack-layer"><path d="m3 12 9 5 9-5" /></g>
+        <g class="stack-layer"><path d="m3 16 9 5 9-5" /></g>
       </svg>
     </summary>
 
