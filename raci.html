@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Walmart Governance RACI</title>
+  <meta name="description" content="Governance RACI for Walmart's supply chain and omnichannel fulfillment transformation: seven recurring decisions, one Accountable owner each." />
+  <style>
+    :root {
+      --blue: #0071ce; --yellow: #ffc220; --navy: #041f41;
+      --page: #f7faff; --surface: rgba(255,255,255,.93); --surface-solid: #ffffff; --surface-soft: rgba(245,249,253,.93);
+      --text: #071e3a; --text-2: #29415b; --muted: #687b8f; --line: rgba(205,220,233,.92);
+      --soft-blue: #e9f5ff; --soft-yellow: #fff7d3;
+      --shadow: 0 24px 65px rgba(4,31,65,.16); --shadow-soft: 0 12px 32px rgba(4,31,65,.10);
+      --store-tint: linear-gradient(180deg, rgba(248,251,255,.76) 0%, rgba(247,250,255,.84) 45%, rgba(244,248,253,.92) 100%);
+    }
+    html[data-theme="dark"] {
+      --page: #07111e; --surface: rgba(10,24,41,.91); --surface-solid: #0b1929; --surface-soft: rgba(14,31,51,.94);
+      --text: #f3f7fb; --text-2: #cfdae6; --muted: #95a9bd; --line: rgba(151,175,198,.20);
+      --soft-blue: rgba(0,113,206,.18); --soft-yellow: rgba(255,194,32,.14);
+      --shadow: 0 26px 72px rgba(0,0,0,.42); --shadow-soft: 0 14px 36px rgba(0,0,0,.28);
+      --store-tint: linear-gradient(180deg, rgba(4,13,24,.72) 0%, rgba(5,16,29,.82) 45%, rgba(6,17,30,.93) 100%);
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0; color: var(--text); background: var(--page); min-height: 100vh; line-height: 1.55;
+      font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      transition: background-color .35s ease, color .35s ease;
+    }
+    /* Background photo (same as roadmap.html). Photo: Winnebaggo, Wikimedia Commons, CC BY-SA 4.0. */
+    .store-bg, .store-tint { position: fixed; inset: 0; pointer-events: none; }
+    .store-bg {
+      z-index: 0; transform: scale(1.025);
+      background: url("https://thumb.wikimedia.org/wikipedia/commons/thumb/3/35/Walmart_Supercenter_interior_-_Tallahassee%2C_Leon_County%2C_FL_-_Thomasville_Road.jpg/1280px-Walmart_Supercenter_interior_-_Tallahassee%2C_Leon_County%2C_FL_-_Thomasville_Road.jpg") center center / cover no-repeat;
+    }
+    .store-tint { z-index: 1; background: var(--store-tint); backdrop-filter: blur(1.5px); }
+    a { color: inherit; }
+    .shell { width: min(1180px, calc(100% - 32px)); margin: 0 auto; }
+    .topbar, main { position: relative; z-index: 2; }
+    :focus-visible { outline: 3px solid var(--yellow); outline-offset: 2px; }
+
+    /* Navigation (same as roadmap.html) */
+    .topbar { position: sticky; top: 0; z-index: 100; background: color-mix(in srgb, var(--surface-solid) 83%, transparent); border-bottom: 1px solid var(--line); backdrop-filter: blur(18px); }
+    .nav { min-height: 72px; display: flex; align-items: center; justify-content: space-between; gap: 22px; }
+    .brand { display: flex; align-items: center; gap: 12px; text-decoration: none; min-width: 0; }
+    .spark-box { width: 42px; height: 42px; border-radius: 14px; background: var(--blue); display: grid; place-items: center; box-shadow: 0 10px 24px rgba(0,113,206,.25); flex: 0 0 auto; }
+    .spark { width: 22px; height: 22px; position: relative; }
+    .spark b { position: absolute; width: 3px; height: 8px; left: 9.5px; top: 0; border-radius: 99px; background: var(--yellow); transform-origin: 50% 11px; }
+    .spark b:nth-child(2) { transform: rotate(60deg); } .spark b:nth-child(3) { transform: rotate(120deg); }
+    .spark b:nth-child(4) { transform: rotate(180deg); } .spark b:nth-child(5) { transform: rotate(240deg); }
+    .spark b:nth-child(6) { transform: rotate(300deg); }
+    .brand-copy strong { display: block; font-size: .98rem; letter-spacing: -.02em; }
+    .brand-copy span { display: block; margin-top: 1px; color: var(--muted); font-size: .74rem; }
+    .nav-right { display: flex; align-items: center; gap: 10px; }
+    .navlinks { display: flex; gap: 6px; }
+    .navlinks a { text-decoration: none; color: var(--text-2); font-size: .83rem; font-weight: 750; padding: 9px 11px; border-radius: 999px; }
+    .navlinks a:hover, .navlinks a.active { color: var(--blue); background: var(--soft-blue); }
+    .theme-toggle { border: 1px solid var(--line); background: var(--surface); color: var(--text); border-radius: 999px; min-width: 104px; height: 39px; padding: 0 12px; font: inherit; font-size: .78rem; font-weight: 800; cursor: pointer; box-shadow: var(--shadow-soft); }
+
+    /* Hero */
+    .hero { padding: 56px 0 30px; text-align: center; }
+    .eyebrow { display: inline-flex; align-items: center; gap: 9px; color: var(--blue); text-transform: uppercase; letter-spacing: .09em; font-size: .72rem; font-weight: 900; }
+    .eyebrow::before { content: ""; width: 28px; height: 3px; border-radius: 999px; background: var(--yellow); }
+    h1 { margin: 14px auto 0; font-size: clamp(2.3rem, 4.5vw, 4rem); line-height: 1; letter-spacing: -.05em; }
+    .hero-copy { max-width: 700px; margin: 18px auto 0; color: var(--text-2); font-size: 1rem; }
+
+    section { margin-bottom: 56px; }
+    .section-head { margin-bottom: 16px; }
+    .section-head h2 { margin: 4px 0 0; font-size: clamp(1.6rem, 3vw, 2.2rem); letter-spacing: -.04em; }
+    .section-head p { margin: 6px 0 0; color: var(--muted); font-size: .87rem; max-width: 720px; }
+
+    .panel { border: 1px solid var(--line); border-radius: 24px; background: var(--surface); box-shadow: var(--shadow); backdrop-filter: blur(18px); overflow: hidden; }
+    .legend { display: flex; flex-wrap: wrap; gap: 10px 22px; padding: 16px 20px; border-bottom: 1px solid var(--line); font-size: .8rem; color: var(--text-2); }
+    .legend span { display: inline-flex; align-items: center; gap: 8px; }
+    .scroll { overflow-x: auto; }
+    table { border-collapse: collapse; width: 100%; font-size: .85rem; }
+    th, td { padding: 12px 12px; border-bottom: 1px solid var(--line); vertical-align: middle; }
+    thead th { background: var(--surface-soft); color: var(--text-2); font-size: .72rem; font-weight: 800; line-height: 1.3; }
+    tbody tr:last-child th, tbody tr:last-child td { border-bottom: 0; }
+    tbody th { text-align: left; font-weight: 800; }
+    tbody th small { display: block; margin-top: 3px; color: var(--muted); font-weight: 650; font-size: .72rem; }
+
+    .matrix table { min-width: 1000px; }
+    .matrix thead th { text-align: center; vertical-align: bottom; }
+    .matrix thead th:first-child { text-align: left; }
+    .matrix tbody th { width: 26%; }
+    .matrix td { text-align: center; }
+
+    .chip { display: inline-grid; place-items: center; width: 32px; height: 32px; border-radius: 10px; font-weight: 900; font-size: .82rem; }
+    .chip.A { background: var(--navy); color: var(--yellow); }
+    .chip.R { background: var(--blue); color: #fff; }
+    .chip.C { background: var(--yellow); color: var(--navy); }
+    .chip.I { background: var(--surface-soft); color: var(--muted); border: 1px solid var(--line); }
+    html[data-theme="dark"] .chip.A { outline: 2px solid var(--yellow); }
+
+    .why table { min-width: 860px; }
+    .why thead th { text-align: left; }
+    .why td { vertical-align: top; color: var(--text-2); }
+    .why tbody th { vertical-align: top; width: 22%; }
+    .why .owner { font-weight: 800; color: var(--text); width: 18%; }
+    .type { display: inline-block; margin-top: 6px; padding: 3px 8px; border-radius: 999px; background: var(--soft-blue); color: var(--blue); font-size: .66rem; font-weight: 900; }
+    .type.case { background: var(--soft-yellow); color: #986a00; }
+    html[data-theme="dark"] .type.case { color: var(--yellow); }
+    .qbr { display: inline-block; margin-top: 6px; margin-left: 4px; padding: 3px 8px; border-radius: 999px; background: var(--navy); color: var(--yellow); font-size: .66rem; font-weight: 900; }
+    .src { color: var(--blue); font-weight: 900; font-size: .74rem; text-decoration: none; white-space: nowrap; }
+
+    .note { margin-top: 14px; padding: 14px 18px; border: 1px solid var(--line); border-radius: 16px; background: var(--surface); color: var(--text-2); font-size: .82rem; }
+    .note ul { margin: 4px 0 0; padding-left: 1.1rem; }
+
+    details { border: 1px solid var(--line); border-radius: 20px; background: var(--surface); box-shadow: var(--shadow-soft); overflow: hidden; }
+    summary { display: flex; justify-content: space-between; align-items: center; cursor: pointer; list-style: none; padding: 16px 20px; font-weight: 850; }
+    summary::-webkit-details-marker { display: none; }
+    summary::after { content: "+"; font-size: 1.1rem; color: var(--blue); }
+    details[open] summary::after { content: "−"; }
+    .source-list { border-top: 1px solid var(--line); padding: 4px 20px 14px; }
+    .source-row { display: grid; grid-template-columns: 42px 1fr auto; gap: 12px; align-items: center; padding: 10px 0; border-bottom: 1px solid var(--line); }
+    .source-row:last-child { border-bottom: 0; }
+    .source-id { color: var(--blue); font-weight: 900; }
+    .source-row b { display: block; font-size: .81rem; }
+    .source-row span { display: block; margin-top: 2px; color: var(--muted); font-size: .72rem; }
+    .source-row a { color: var(--blue); text-decoration: none; font-size: .7rem; font-weight: 900; border: 1px solid color-mix(in srgb, var(--blue) 28%, var(--line)); border-radius: 999px; padding: 6px 9px; background: var(--surface-solid); }
+
+    footer { padding: 22px 0 34px; border-top: 1px solid var(--line); color: var(--muted); font-size: .73rem; display: flex; justify-content: space-between; gap: 18px; }
+    footer a { color: var(--muted); }
+    @media (max-width: 900px) { .navlinks { display: none; } }
+    @media (max-width: 650px) {
+      .shell { width: min(100% - 22px, 1180px); }
+      .brand-copy span { display: none; }
+      .theme-toggle { min-width: 88px; }
+      .source-row { grid-template-columns: 34px 1fr; }
+      .source-row a { grid-column: 2; justify-self: start; }
+      footer { flex-direction: column; }
+    }
+  </style>
+</head>
+<body>
+  <div class="store-bg" aria-hidden="true"></div>
+  <div class="store-tint" aria-hidden="true"></div>
+
+  <header class="topbar">
+    <div class="shell nav">
+      <a class="brand" href="index.html">
+        <div class="spark-box" aria-hidden="true"><div class="spark"><b></b><b></b><b></b><b></b><b></b><b></b></div></div>
+        <div class="brand-copy"><strong>Walmart Transformation Portfolio</strong><span>ISM 6346 · Group 9</span></div>
+      </a>
+      <div class="nav-right">
+        <nav class="navlinks">
+          <a href="index.html">About Us</a>
+          <a href="roadmap.html">Roadmap</a>
+          <a class="active" href="raci.html">RACI</a>
+          <a href="dashboard.html">QBR Dashboard</a>
+        </nav>
+        <button class="theme-toggle" id="themeToggle" type="button" aria-label="Toggle light and dark mode">◐ Dark</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="shell">
+    <section class="hero">
+      <div class="eyebrow">Member B · Governance Designer</div>
+      <h1>Governance RACI</h1>
+      <p class="hero-copy">Seven decisions that come up again and again as the roadmap moves forward, and the one Walmart executive who has the final say on each.</p>
+    </section>
+
+    <!-- 1. RACI MATRIX -->
+    <section id="matrix">
+      <div class="section-head">
+        <div class="eyebrow">1 · RACI matrix</div>
+        <h2>Who does what, decision by decision.</h2>
+        <p>Read across a row. Each row has exactly one A. Codes under each decision are the roadmap initiatives that create it.</p>
+      </div>
+      <div class="panel matrix">
+        <div class="legend">
+          <span><b class="chip A">A</b> Accountable: final say, one per decision</span>
+          <span><b class="chip R">R</b> Responsible: does the work</span>
+          <span><b class="chip C">C</b> Consulted: gives input before the decision</span>
+          <span><b class="chip I">I</b> Informed: told after the decision</span>
+        </div>
+        <div class="scroll" tabindex="0" aria-label="RACI matrix, scrolls horizontally">
+          <table>
+            <thead>
+              <tr>
+                <th scope="col">Decision</th>
+                <th scope="col">EVP, President &amp; CEO, Walmart U.S.</th>
+                <th scope="col">EVP &amp; CFO</th>
+                <th scope="col">EVP &amp; COO, Walmart U.S.</th>
+                <th scope="col">EVP, Supply Chain, Walmart U.S.</th>
+                <th scope="col">EVP &amp; Chief eCommerce Officer, Walmart U.S.</th>
+                <th scope="col">EVP, Global CTO &amp; Chief Development Officer</th>
+                <th scope="col">EVP &amp; Chief Merchandising Officer, Walmart U.S.</th>
+                <th scope="col">EVP &amp; Chief People Officer, Walmart U.S.</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><th scope="row">D1. Automation budget allocation<small>C1 · C2 · C3 · R1</small></th>
+                <td><b class="chip C">C</b></td><td><b class="chip A">A</b></td><td><b class="chip R">R</b></td><td><b class="chip R">R</b></td><td><b class="chip C">C</b></td><td><b class="chip C">C</b></td><td><b class="chip I">I</b></td><td><b class="chip I">I</b></td></tr>
+              <tr><th scope="row">D2. Shared automation platform standards<small>C1 · C2 · C3 · R1</small></th>
+                <td><b class="chip I">I</b></td><td><b class="chip I">I</b></td><td><b class="chip C">C</b></td><td><b class="chip R">R</b></td><td><b class="chip R">R</b></td><td><b class="chip A">A</b></td><td><b class="chip I">I</b></td><td><b class="chip I">I</b></td></tr>
+              <tr><th scope="row">D3. Demand, inventory and delivery data ownership<small>W1 · R2</small></th>
+                <td><b class="chip I">I</b></td><td><b class="chip I">I</b></td><td><b class="chip A">A</b></td><td><b class="chip R">R</b></td><td><b class="chip R">R</b></td><td><b class="chip R">R</b></td><td><b class="chip C">C</b></td><td><b class="chip I">I</b></td></tr>
+              <tr><th scope="row">D4. Which network gets automated next<small>W2 vs. R1</small></th>
+                <td><b class="chip C">C</b></td><td><b class="chip C">C</b></td><td><b class="chip A">A</b></td><td><b class="chip R">R</b></td><td><b class="chip R">R</b></td><td><b class="chip C">C</b></td><td><b class="chip C">C</b></td><td><b class="chip I">I</b></td></tr>
+              <tr><th scope="row">D5. Automation and robotics partners<small>C1 · C3 · W3</small></th>
+                <td><b class="chip I">I</b></td><td><b class="chip C">C</b></td><td><b class="chip C">C</b></td><td><b class="chip A">A</b></td><td><b class="chip I">I</b></td><td><b class="chip R">R</b></td><td><b class="chip I">I</b></td><td><b class="chip I">I</b></td></tr>
+              <tr><th scope="row">D6. Pilot-to-scale gate<small>W3 → R1 · W2 → R2</small></th>
+                <td><b class="chip A">A</b></td><td><b class="chip C">C</b></td><td><b class="chip R">R</b></td><td><b class="chip R">R</b></td><td><b class="chip R">R</b></td><td><b class="chip C">C</b></td><td><b class="chip I">I</b></td><td><b class="chip C">C</b></td></tr>
+              <tr><th scope="row">D7. Associate role transition<small>W3 · R1 · R2</small></th>
+                <td><b class="chip I">I</b></td><td><b class="chip C">C</b></td><td><b class="chip R">R</b></td><td><b class="chip R">R</b></td><td><b class="chip I">I</b></td><td><b class="chip I">I</b></td><td><b class="chip I">I</b></td><td><b class="chip A">A</b></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- 2. ACCOUNTABLE RATIONALE -->
+    <section id="rationale">
+      <div class="section-head">
+        <div class="eyebrow">2 · Accountable rationale</div>
+        <h2>Why each person has the final say.</h2>
+        <p>Decisions marked "Due this quarter" are the ones listed on the QBR dashboard.</p>
+      </div>
+      <div class="panel why">
+        <div class="scroll" tabindex="0" aria-label="Accountable rationale table">
+          <table>
+            <thead><tr><th scope="col">Decision</th><th scope="col">Accountable</th><th scope="col">Why this role (2–3 sentences)</th></tr></thead>
+            <tbody>
+              <tr>
+                <th scope="row">D1. Automation budget allocation<br><span class="type">Budget allocation</span></th>
+                <td class="owner">EVP &amp; CFO</td>
+                <td>C1, C2, C3 and R1 compete for one capital pool for supply chain and technology, which grew from $11.8B in FY2024 to $14.6B in FY2025 <a class="src" href="#src-E2">[E2]</a><a class="src" href="#src-E3">[E3]</a>. No operating leader should decide funding for their own project, so the CFO, who owns capital allocation across Walmart, has the final say, with the U.S. CEO consulted on priorities.</td>
+              </tr>
+              <tr>
+                <th scope="row">D2. Shared automation platform standards<br><span class="type">Architecture standards</span></th>
+                <td class="owner">EVP, Global CTO &amp; Chief Development Officer</td>
+                <td>Automation runs across 164 U.S. distribution facilities <a class="src" href="#src-E3">[E3]</a>, and they only work as one network if their systems stay compatible. Technology also changes hands: Walmart bought Alphabot's developer in 2022 <a class="src" href="#src-E1">[E1]</a> and sold that business to Symbotic in 2025 <a class="src" href="#src-G4">[G4]</a><a class="src" href="#src-G5">[G5]</a>. The enterprise technology leader approves exceptions, not any single facility program.</td>
+              </tr>
+              <tr>
+                <th scope="row">D3. Demand, inventory and delivery data ownership<br><span class="type">Data governance</span></th>
+                <td class="owner">EVP &amp; COO, Walmart U.S.</td>
+                <td>The COO is responsible for all U.S. store operations and supply chain <a class="src" href="#src-G1">[G1]</a>, which covers both places this data is used: AI inventory positioning (W1) and delivery zones (R2). Walmart lists no Chief Data Officer among its executive officers <a class="src" href="#src-E3">[E3]</a>, so the operating owner of the data holds the decision.</td>
+              </tr>
+              <tr>
+                <th scope="row">D4. Which network gets automated next<br><span class="type">Initiative prioritization</span><span class="qbr">Due this quarter</span></th>
+                <td class="owner">EVP &amp; COO, Walmart U.S.</td>
+                <td>With limited capacity, Walmart must choose between more parcel stations (W2) <a class="src" href="#src-S5">[S5]</a> and grocery warehouse automation (R1) <a class="src" href="#src-S7">[S7]</a>. This is a trade-off between delivery and warehouse capacity, and the COO is the only role over both <a class="src" href="#src-G1">[G1]</a>, so neither side decides for the other.</td>
+              </tr>
+              <tr>
+                <th scope="row">D5. Automation and robotics partners<br><span class="type">Vendor &amp; partnership</span></th>
+                <td class="owner">EVP, Supply Chain, Walmart U.S.</td>
+                <td>Partner equipment, from Symbotic's systems in regional DCs <a class="src" href="#src-G4">[G4]</a> to Fox Robotics' forklifts <a class="src" href="#src-S6">[S6]</a>, runs inside the warehouses the supply chain team operates, so that leader owns the relationships. The CTO checks technical fit, and the CFO is consulted because Walmart took an ownership stake in Fox Robotics <a class="src" href="#src-S6">[S6]</a>.</td>
+              </tr>
+              <tr>
+                <th scope="row">D6. Pilot-to-scale gate<br><span class="type case">Case-specific</span><span class="qbr">Due this quarter</span></th>
+                <td class="owner">EVP, President &amp; CEO, Walmart U.S.</td>
+                <td>Scaling a test commits money, facilities and workers across supply chain, eCommerce and stores at once, so it needs the leader over all of Walmart U.S. Walmart's own deals work this way: more forklifts come only with continued performance <a class="src" href="#src-S6">[S6]</a><a class="src" href="#src-G3">[G3]</a>, and 400 Symbotic store systems only if targets are met <a class="src" href="#src-G4">[G4]</a>.</td>
+              </tr>
+              <tr>
+                <th scope="row">D7. Associate role transition<br><span class="type case">Case-specific</span><span class="qbr">Due this quarter</span></th>
+                <td class="owner">EVP &amp; Chief People Officer, Walmart U.S.</td>
+                <td>This role oversees people efforts for all Walmart U.S. associates in stores, distribution centers and fulfillment centers <a class="src" href="#src-G2">[G2]</a>, the workforce every automation wave affects. Walmart trains associates to run the new forklifts <a class="src" href="#src-S6">[S6]</a>, and R1 requires retraining workers into technology-enabled roles.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="note">
+        <b>Gaps we acknowledge</b>
+        <ul>
+          <li>The R, C and I placements and each Accountable choice are our team's analysis of Walmart's published structure, not decision rights Walmart has disclosed.</li>
+          <li>The matrix names roles, not people; several of these roles changed hands between 2022 and 2025.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- 3. SOURCES -->
+    <section id="sources">
+      <details>
+        <summary>Sources (E and S codes match the roadmap; G codes added for this page)</summary>
+        <div class="source-list">
+          <div class="source-row" id="src-E1"><div class="source-id">E1</div><div><b>Walmart Form 10-K, FY ended Jan. 31, 2023</b><span>Alert Innovation (Alphabot) acquisition</span></div><a target="_blank" rel="noopener" href="https://www.sec.gov/Archives/edgar/data/104169/000010416923000020/wmt-20230131.htm">Open</a></div>
+          <div class="source-row" id="src-E2"><div class="source-id">E2</div><div><b>Walmart Form 10-K, FY ended Jan. 31, 2024</b><span>FY2024 supply chain and technology capex</span></div><a target="_blank" rel="noopener" href="https://www.sec.gov/Archives/edgar/data/104169/000010416924000056/wmt-20240131.htm">Open</a></div>
+          <div class="source-row" id="src-E3"><div class="source-id">E3</div><div><b>Walmart Form 10-K, FY ended Jan. 31, 2025</b><span>Executive officers; 164 distribution facilities; FY2025 capex</span></div><a target="_blank" rel="noopener" href="https://www.sec.gov/Archives/edgar/data/104169/000010416925000021/wmt-20250131.htm">Open</a></div>
+          <div class="source-row" id="src-S5"><div class="source-id">S5</div><div><b>Parcel Stations</b><span>Walmart · Nov. 21, 2023</span></div><a target="_blank" rel="noopener" href="https://corporate.walmart.com/news/2023/11/21/walmart-introduces-parcel-stations-to-speed-up-delivery">Open</a></div>
+          <div class="source-row" id="src-S6"><div class="source-id">S6</div><div><b>Autonomous Materials Handling</b><span>Walmart · Apr. 11, 2024</span></div><a target="_blank" rel="noopener" href="https://corporate.walmart.com/news/2024/04/11/a-fork-in-the-road-walmart-bets-on-associates-automation">Open</a></div>
+          <div class="source-row" id="src-S7"><div class="source-id">S7</div><div><b>Grocery Network Automation</b><span>Walmart · July 10, 2024</span></div><a target="_blank" rel="noopener" href="https://corporate.walmart.com/news/2024/07/10/walmarts-grocery-network-transformation-the-next-steps-on-our-supply-chain-modernization-journey">Open</a></div>
+          <div class="source-row" id="src-G1"><div class="source-id">G1</div><div><b>Walmart Form 8-K press release, Jan. 16, 2026</b><span>Walmart U.S. COO responsibilities and EVP titles</span></div><a target="_blank" rel="noopener" href="https://www.sec.gov/Archives/edgar/data/104169/000010416926000023/pressrelease-11626.htm">Open</a></div>
+          <div class="source-row" id="src-G2"><div class="source-id">G2</div><div><b>Walmart U.S. Chief People Officer appointment</b><span>Chain Store Age · Feb. 2023</span></div><a target="_blank" rel="noopener" href="https://chainstoreage.com/walmart-taps-five-below-exec-chief-people-officer">Open</a></div>
+          <div class="source-row" id="src-G3"><div class="source-id">G3</div><div><b>Walmart and Fox Robotics multi-year agreement</b><span>Fox Robotics · Apr. 15, 2024</span></div><a target="_blank" rel="noopener" href="https://foxrobotics.com/blog/walmart-and-fox-robotics-enter-into-multi-year-commercial-agreement-walmart-invests-growth-capital/">Open</a></div>
+          <div class="source-row" id="src-G4"><div class="source-id">G4</div><div><b>Symbotic Form 8-K, Exhibit 99.1, Jan. 16, 2025</b><span>Acquisition of Walmart's robotics business; 400 store systems</span></div><a target="_blank" rel="noopener" href="https://www.sec.gov/Archives/edgar/data/1837240/000119312525007370/d916752dex991.htm">Open</a></div>
+          <div class="source-row" id="src-G5"><div class="source-id">G5</div><div><b>Symbotic Form 10-Q, quarter ended Mar. 29, 2025</b><span>Acquisition closed Jan. 27, 2025</span></div><a target="_blank" rel="noopener" href="https://www.sec.gov/Archives/edgar/data/1837240/000183724025000152/sym-20250329.htm">Open</a></div>
+        </div>
+      </details>
+    </section>
+
+    <footer>
+      <span>Walmart U.S. supply chain case · 2022–2025 · Member B, Governance Designer</span>
+      <span>Background photo: <a target="_blank" rel="noopener" href="https://commons.wikimedia.org/wiki/File:Walmart_Supercenter_interior_-_Tallahassee,_Leon_County,_FL_-_Thomasville_Road.jpg">Winnebaggo / Wikimedia Commons</a> · CC BY-SA 4.0</span>
+    </footer>
+  </main>
+
+  <script>
+    /* Theme toggle: same storage key as roadmap.html so the choice carries across pages. */
+    const root = document.documentElement;
+    const themeToggle = document.getElementById("themeToggle");
+    function setTheme(theme) {
+      root.dataset.theme = theme;
+      try { localStorage.setItem("walmart-roadmap-theme", theme); } catch (e) {}
+      themeToggle.textContent = theme === "dark" ? "☀ Light" : "◐ Dark";
+    }
+    let saved = null;
+    try { saved = localStorage.getItem("walmart-roadmap-theme"); } catch (e) {}
+    const systemDark = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches;
+    setTheme(saved || (systemDark ? "dark" : "light"));
+    themeToggle.addEventListener("click", () => setTheme(root.dataset.theme === "dark" ? "light" : "dark"));
+  </script>
+</body>
+</html>
