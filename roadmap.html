@@ -195,19 +195,13 @@
       gap: 6px;
     }
 
-    .navlinks a,
-    .navlinks .nav-placeholder {
+    .navlinks a {
       text-decoration: none;
       color: var(--text-2);
       font-size: .83rem;
       font-weight: 750;
       padding: 9px 11px;
       border-radius: 999px;
-    }
-
-    .navlinks .nav-placeholder {
-      color: var(--muted);
-      cursor: default;
     }
 
     .navlinks a:hover,
@@ -908,13 +902,16 @@
 
     @media (max-width: 900px) {
       .quick-stats { grid-template-columns: 1fr 1fr; }
-      .navlinks { display: none; }
+      .nav { flex-wrap: wrap; justify-content: center; padding: 10px 0; gap: 8px 14px; }
+      .nav-right { flex-wrap: wrap; justify-content: center; }
+      .navlinks { display: flex; flex-wrap: wrap; justify-content: center; }
     }
 
     @media (max-width: 650px) {
       .shell { width: min(100% - 22px, 1180px); }
       .brand-copy span { display: none; }
       .theme-toggle { min-width: 88px; }
+      .navlinks a { padding: 7px 8px; font-size: .75rem; }
       .hero { padding-top: 48px; }
       .deck-stage { height: 430px; }
       .deck-card {
@@ -959,11 +956,11 @@
       </a>
 
       <div class="nav-right">
-        <nav class="navlinks">
-          <span class="nav-placeholder">About Us</span>
-          <a class="active" href="roadmap.html">Roadmap</a>
-          <span class="nav-placeholder">RACI</span>
-          <span class="nav-placeholder">QBR Dashboard</span>
+        <nav class="navlinks" aria-label="Main navigation">
+          <a href="index.html">About Us</a>
+          <a class="active" href="roadmap.html" aria-current="page">Roadmap</a>
+          <a href="raci.html">RACI</a>
+          <a href="dashboard.html">QBR Dashboard</a>
         </nav>
 
         <button class="theme-toggle" id="themeToggle" type="button" aria-label="Toggle light and dark mode">

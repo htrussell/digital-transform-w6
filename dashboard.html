@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
@@ -294,12 +294,152 @@
         .store-bg, .store-tint { display: none; }
         main { background: white; }
       }
+
+      .topbar {
+        position: sticky;
+        top: 0;
+        z-index: 10;
+        border-bottom: 1px solid #cddce9;
+        background: rgba(255,255,255,.92);
+        backdrop-filter: blur(18px);
+      }
+      .shell { width: min(1250px, calc(100% - 32px)); margin: 0 auto; }
+      .nav {
+        min-height: 72px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 22px;
+      }
+      .brand { display: flex; align-items: center; gap: 12px; min-width: 0; color: #041f41; text-decoration: none; }
+      .spark-box {
+        width: 42px;
+        height: 42px;
+        flex: 0 0 auto;
+        display: grid;
+        place-items: center;
+        border-radius: 14px;
+        background: #0071ce;
+        box-shadow: 0 10px 24px rgba(0,113,206,.25);
+      }
+      .spark { width: 22px; height: 22px; position: relative; }
+      .spark b {
+        position: absolute;
+        top: 0;
+        left: 9.5px;
+        width: 3px;
+        height: 8px;
+        border-radius: 99px;
+        background: #ffc220;
+        transform-origin: 50% 11px;
+      }
+      .spark b:nth-child(1) { transform: rotate(0deg); }
+      .spark b:nth-child(2) { transform: rotate(60deg); }
+      .spark b:nth-child(3) { transform: rotate(120deg); }
+      .spark b:nth-child(4) { transform: rotate(180deg); }
+      .spark b:nth-child(5) { transform: rotate(240deg); }
+      .spark b:nth-child(6) { transform: rotate(300deg); }
+      .brand-copy strong { display: block; font-size: .98rem; }
+      .brand-copy span { display: block; margin-top: 1px; color: #687b8f; font-size: .74rem; }
+      .navlinks { display: flex; flex-wrap: wrap; gap: 6px; }
+      .navlinks a {
+        padding: 9px 11px;
+        border-radius: 999px;
+        color: #29415b;
+        font-size: .83rem;
+        font-weight: 750;
+        text-decoration: none;
+      }
+      .navlinks a:hover, .navlinks a.active { color: #0071ce; background: #e9f5ff; }
+      :focus-visible { outline: 3px solid #ffc220; outline-offset: 2px; }
+      @media (max-width: 900px) {
+        .nav { flex-wrap: wrap; justify-content: center; padding: 10px 0; gap: 8px 14px; }
+        .navlinks { justify-content: center; }
+      }
+      @media (max-width: 650px) {
+        .shell { width: min(100% - 22px, 1250px); }
+        .brand-copy span { display: none; }
+        .navlinks a { padding: 7px 8px; font-size: .75rem; }
+      }
+      @media print {
+        .topbar { display: none; }
+      }
+      .theme-toggle {
+        min-width: 104px;
+        height: 39px;
+        padding: 0 12px;
+        border: 1px solid #cddce9;
+        border-radius: 999px;
+        background: rgba(255,255,255,.94);
+        color: #071e3a;
+        font: inherit;
+        font-size: .78rem;
+        font-weight: 800;
+        cursor: pointer;
+      }
+      @media (max-width: 900px) {
+        .nav-right { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 10px; }
+      }
+      @media (max-width: 650px) {
+        .theme-toggle { min-width: 88px; }
+      }
+      @media screen {
+        html[data-theme="dark"] body { color: #f3f7fb; background: #07111e; }
+        html[data-theme="dark"] .store-tint { background: linear-gradient(180deg, rgba(4,13,24,.80), rgba(5,16,29,.88) 45%, rgba(6,17,30,.95)); }
+        html[data-theme="dark"] .topbar { border-color: rgba(151,175,198,.24); background: rgba(10,24,41,.94); }
+        html[data-theme="dark"] .brand { color: #f3f7fb; }
+        html[data-theme="dark"] .brand-copy span { color: #95a9bd; }
+        html[data-theme="dark"] .navlinks a { color: #cfdae6; }
+        html[data-theme="dark"] .navlinks a:hover,
+        html[data-theme="dark"] .navlinks a.active { color: #72c4ff; background: rgba(0,113,206,.22); }
+        html[data-theme="dark"] .theme-toggle { border-color: rgba(151,175,198,.24); background: #0b1929; color: #f3f7fb; }
+        html[data-theme="dark"] main { border-color: rgba(151,175,198,.24); background: rgba(10,24,41,.94); color: #f3f7fb; }
+        html[data-theme="dark"] h1,
+        html[data-theme="dark"] h2,
+        html[data-theme="dark"] h3 { color: #f3f7fb; }
+        html[data-theme="dark"] small,
+        html[data-theme="dark"] p { color: #cfdae6; }
+        html[data-theme="dark"] .grid > section,
+        html[data-theme="dark"] .source-panel,
+        html[data-theme="dark"] .notes { border-color: rgba(151,175,198,.24); background: #0e1f33; }
+        html[data-theme="dark"] article { border-color: rgba(151,175,198,.24); background: #0b1929; }
+        html[data-theme="dark"] .health,
+        html[data-theme="dark"] .unknown { border-color: rgba(255,194,32,.38); background: rgba(255,194,32,.14); }
+        html[data-theme="dark"] .health b,
+        html[data-theme="dark"] .unknown { color: #ffd166; }
+        html[data-theme="dark"] .change { background: rgba(0,113,206,.18); }
+        html[data-theme="dark"] .source-panel summary,
+        html[data-theme="dark"] .sources a { color: #72c4ff; }
+        html[data-theme="dark"] div[style*="background:#dce3ec"] { background: #293b50 !important; }
+        html[data-theme="dark"] div[style*="background:#dce3ec"] > div[style*="background:#ad7411"] { background: #e3ad35 !important; }
+        html[data-theme="dark"] div[style*="background:#dce3ec"] > div[style*="background:#16744b"] { background: #43a977 !important; }
+        html[data-theme="dark"] div[style*="background:#dce3ec"] > i { background: #d9e2ec !important; }
+        html[data-theme="dark"] strong[style*="color:#ad7411"] { color: #ffd166 !important; }
+        html[data-theme="dark"] strong[style*="color:#16744b"] { color: #72d6a1 !important; }
+        html[data-theme="dark"] h2 small[style*="color:#ad7411"] { color: #ffd166 !important; }
+        html[data-theme="dark"] h2 small[style*="color:#16744b"] { color: #72d6a1 !important; }
+      }
     </style>
   </head>
   <body>
     <!-- Photo: Winnebaggo, Wikimedia Commons, CC BY-SA 4.0. -->
     <div class="store-bg" aria-hidden="true"></div>
     <div class="store-tint" aria-hidden="true"></div>
+    <header class="topbar">
+      <div class="shell nav">
+        <a class="brand" href="index.html">
+          <span class="spark-box" aria-hidden="true"><span class="spark"><b></b><b></b><b></b><b></b><b></b><b></b></span></span>
+          <span class="brand-copy"><strong>Walmart Transformation Portfolio</strong><span>ISM 6346 · Group 9</span></span>
+        </a>
+        <nav class="navlinks" aria-label="Main navigation">
+          <a href="index.html">About Us</a>
+          <a href="roadmap.html">Roadmap</a>
+          <a href="raci.html">RACI</a>
+          <a class="active" href="dashboard.html" aria-current="page">QBR Dashboard</a>
+        </nav>
+        <button class="theme-toggle" id="themeToggle" type="button" aria-label="Toggle light and dark mode">◐ Dark</button>
+      </div>
+    </header>
     <!-- Quarterly review: overview, phase metrics, decisions, and sources. -->
     <main>
       <div class="page-label">Walmart | Transformation governance | Member C</div>
@@ -426,6 +566,22 @@
         </div>
       </details>
     </main>
+    <script>
+      const root = document.documentElement;
+      const themeToggle = document.getElementById("themeToggle");
+      function setTheme(theme) {
+        root.dataset.theme = theme;
+        try { localStorage.setItem("walmart-roadmap-theme", theme); } catch (error) {}
+        themeToggle.textContent = theme === "dark" ? "☀ Light" : "◐ Dark";
+      }
+      let savedTheme = null;
+      try { savedTheme = localStorage.getItem("walmart-roadmap-theme"); } catch (error) {}
+      const systemDark = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches;
+      setTheme(savedTheme || (systemDark ? "dark" : "light"));
+      themeToggle.addEventListener("click", () => {
+        setTheme(root.dataset.theme === "dark" ? "light" : "dark");
+      });
+    </script>
     <script>
       // Keep references collapsed on screen and visible in printed copies.
       const sourcesPanel = document.querySelector('.source-panel');
