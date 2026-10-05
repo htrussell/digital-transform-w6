@@ -1,817 +1,835 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>ISM 6346 — Transformation Roadmap & Governance</title>
+  <title>Walmart Digital Transformation Portfolio | About Us</title>
+  <meta name="description" content="Executive portfolio, transformation roadmap, governance RACI, and QBR review dashboard for Walmart's supply chain and omnichannel fulfillment modernization." />
   <style>
     :root {
-      --primary: #1e293b;
-      --accent: #2563eb;
-      --bg: #f8fafc;
-      --card-bg: #ffffff;
-      --border: #e2e8f0;
-      --text: #0f172a;
-      --text-muted: #64748b;
-      
-      /* Status Colors */
-      --green: #16a34a;
-      --green-bg: #dcfce7;
-      --amber: #d97706;
-      --amber-bg: #fef3c7;
-      --red: #dc2626;
-      --red-bg: #fee2e2;
-
-      /* Phase Colors */
-      --crawl-border: #93c5fd;
-      --walk-border: #fcd34d;
-      --run-border: #86efac;
+      --blue: #0071ce;
+      --yellow: #ffc220;
+      --navy: #041f41;
+      --page: #f7faff;
+      --surface: rgba(255,255,255,.93);
+      --surface-solid: #ffffff;
+      --surface-soft: rgba(245,249,253,.93);
+      --text: #071e3a;
+      --text-2: #29415b;
+      --muted: #687b8f;
+      --line: rgba(205,220,233,.92);
+      --soft-blue: #e9f5ff;
+      --soft-yellow: #fff7d3;
+      --shadow: 0 24px 65px rgba(4,31,65,.16);
+      --shadow-soft: 0 12px 32px rgba(4,31,65,.10);
+      --store-tint: linear-gradient(180deg, rgba(248,251,255,.76) 0%, rgba(247,250,255,.84) 45%, rgba(244,248,253,.92) 100%);
     }
 
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
+    html[data-theme="dark"] {
+      --page: #07111e;
+      --surface: rgba(10,24,41,.91);
+      --surface-solid: #0b1929;
+      --surface-soft: rgba(14,31,51,.94);
+      --text: #f3f7fb;
+      --text-2: #cfdae6;
+      --muted: #95a9bd;
+      --line: rgba(151,175,198,.20);
+      --soft-blue: rgba(0,113,206,.18);
+      --soft-yellow: rgba(255,194,32,.14);
+      --shadow: 0 26px 72px rgba(0,0,0,.42);
+      --shadow-soft: 0 14px 36px rgba(0,0,0,.28);
+      --store-tint: linear-gradient(180deg, rgba(4,13,24,.72) 0%, rgba(5,16,29,.82) 45%, rgba(6,17,30,.93) 100%);
     }
 
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
     body {
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-      background-color: var(--bg);
+      margin: 0;
       color: var(--text);
-      line-height: 1.5;
-      padding-bottom: 4rem;
+      background: var(--page);
+      font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      min-height: 100vh;
+      line-height: 1.55;
+      transition: background-color .35s ease, color .35s ease;
     }
 
-    /* Navigation Bar */
-    header {
-      background: var(--card-bg);
-      border-bottom: 1px solid var(--border);
+    .store-bg, .store-tint {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+    }
+    .store-bg {
+      z-index: 0;
+      transform: scale(1.025);
+      background: url("https://thumb.wikimedia.org/wikipedia/commons/thumb/3/35/Walmart_Supercenter_interior_-_Tallahassee%2C_Leon_County%2C_FL_-_Thomasville_Road.jpg/1280px-Walmart_Supercenter_interior_-_Tallahassee%2C_Leon_County%2C_FL_-_Thomasville_Road.jpg") center center / cover no-repeat;
+    }
+    .store-tint {
+      z-index: 1;
+      background: var(--store-tint);
+      backdrop-filter: blur(1.5px);
+    }
+
+    a { color: inherit; }
+    .shell { width: min(1180px, calc(100% - 32px)); margin: 0 auto; }
+    .topbar, main { position: relative; z-index: 2; }
+    :focus-visible { outline: 3px solid var(--yellow); outline-offset: 2px; }
+
+    /* Navigation */
+    .topbar {
       position: sticky;
       top: 0;
       z-index: 100;
+      background: color-mix(in srgb, var(--surface-solid) 83%, transparent);
+      border-bottom: 1px solid var(--line);
+      backdrop-filter: blur(18px);
     }
-
-    .nav-container {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 0.85rem 1.5rem;
+    .nav {
+      min-height: 72px;
       display: flex;
-      justify-content: space-between;
       align-items: center;
-      flex-wrap: wrap;
-      gap: 1rem;
+      justify-content: space-between;
+      gap: 22px;
     }
-
-    .nav-brand h1 {
-      font-size: 1.15rem;
-      font-weight: 700;
-      color: var(--primary);
-    }
-
-    .nav-brand p {
-      font-size: 0.8rem;
-      color: var(--text-muted);
-    }
-
-    nav a {
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
       text-decoration: none;
-      color: var(--text-muted);
-      font-size: 0.9rem;
-      font-weight: 500;
-      margin-left: 1.25rem;
-      transition: color 0.2s ease;
+      min-width: 0;
+    }
+    .spark-box {
+      width: 42px;
+      height: 42px;
+      border-radius: 14px;
+      background: var(--blue);
+      display: grid;
+      place-items: center;
+      box-shadow: 0 10px 24px rgba(0,113,206,.25);
+      flex: 0 0 auto;
+    }
+    .spark { width: 22px; height: 22px; position: relative; }
+    .spark b {
+      position: absolute;
+      width: 3px;
+      height: 8px;
+      left: 9.5px;
+      top: 0;
+      border-radius: 99px;
+      background: var(--yellow);
+      transform-origin: 50% 11px;
+    }
+    .spark b:nth-child(1) { transform: rotate(0deg); }
+    .spark b:nth-child(2) { transform: rotate(60deg); }
+    .spark b:nth-child(3) { transform: rotate(120deg); }
+    .spark b:nth-child(4) { transform: rotate(180deg); }
+    .spark b:nth-child(5) { transform: rotate(240deg); }
+    .spark b:nth-child(6) { transform: rotate(300deg); }
+
+    .brand-copy strong { display: block; font-size: .98rem; letter-spacing: -.02em; }
+    .brand-copy span { display: block; margin-top: 1px; color: var(--muted); font-size: .74rem; }
+
+    .nav-right { display: flex; align-items: center; gap: 10px; }
+    .navlinks { display: flex; gap: 6px; }
+    .navlinks a {
+      text-decoration: none;
+      color: var(--text-2);
+      font-size: .83rem;
+      font-weight: 750;
+      padding: 9px 12px;
+      border-radius: 999px;
+      transition: background .2s ease, color .2s ease;
+    }
+    .navlinks a:hover, .navlinks a.active {
+      color: var(--blue);
+      background: var(--soft-blue);
+    }
+    .theme-toggle {
+      border: 1px solid var(--line);
+      background: var(--surface);
+      color: var(--text);
+      border-radius: 999px;
+      min-width: 104px;
+      height: 39px;
+      padding: 0 12px;
+      font: inherit;
+      font-size: .78rem;
+      font-weight: 800;
+      cursor: pointer;
+      box-shadow: var(--shadow-soft);
+      backdrop-filter: blur(12px);
     }
 
-    nav a:hover {
-      color: var(--accent);
+    /* Hero */
+    .hero {
+      padding: 60px 0 34px;
+      text-align: center;
+    }
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      color: var(--blue);
+      text-transform: uppercase;
+      letter-spacing: .09em;
+      font-size: .72rem;
+      font-weight: 900;
+    }
+    .eyebrow::before {
+      content: "";
+      width: 28px;
+      height: 3px;
+      border-radius: 999px;
+      background: var(--yellow);
+    }
+    h1 {
+      margin: 14px auto 0;
+      font-size: clamp(2.3rem, 4.8vw, 4.2rem);
+      line-height: 1.05;
+      letter-spacing: -.05em;
+      max-width: 900px;
+    }
+    .hero-copy {
+      max-width: 760px;
+      margin: 18px auto 0;
+      color: var(--text-2);
+      font-size: 1.05rem;
     }
 
-    /* Main Container */
-    main {
-      max-width: 1200px;
-      margin: 2rem auto;
-      padding: 0 1.5rem;
+    /* Artifacts Quick Navigation Cards */
+    .artifacts-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+      margin: 36px 0 54px;
+    }
+    .artifact-card {
+      border: 1px solid var(--line);
+      border-radius: 22px;
+      background: var(--surface);
+      padding: 24px;
+      box-shadow: var(--shadow-soft);
+      backdrop-filter: blur(15px);
       display: flex;
       flex-direction: column;
-      gap: 2.5rem;
-    }
-
-    /* Section Cards */
-    .section-card {
-      background: var(--card-bg);
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      padding: 2rem;
-      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
-    }
-
-    .section-header {
-      margin-bottom: 1.5rem;
-      border-bottom: 1px solid var(--border);
-      padding-bottom: 0.75rem;
-      display: flex;
       justify-content: space-between;
-      align-items: flex-end;
-      flex-wrap: wrap;
-      gap: 0.5rem;
+      transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease;
+      text-decoration: none;
+      position: relative;
+      overflow: hidden;
+    }
+    .artifact-card::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 5px;
+    }
+    .artifact-card:nth-child(1)::before { background: var(--blue); }
+    .artifact-card:nth-child(2)::before { background: var(--yellow); }
+    .artifact-card:nth-child(3)::before { background: var(--navy); }
+    html[data-theme="dark"] .artifact-card:nth-child(3)::before { background: #4ca3ff; }
+
+    .artifact-card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow);
+      border-color: color-mix(in srgb, var(--blue) 40%, var(--line));
+    }
+    .artifact-card-badge {
+      display: inline-block;
+      align-self: flex-start;
+      font-size: .68rem;
+      font-weight: 850;
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      padding: 4px 9px;
+      border-radius: 999px;
+      margin-bottom: 12px;
+    }
+    .artifact-card:nth-child(1) .artifact-card-badge { background: var(--soft-blue); color: var(--blue); }
+    .artifact-card:nth-child(2) .artifact-card-badge { background: var(--soft-yellow); color: #986a00; }
+    html[data-theme="dark"] .artifact-card:nth-child(2) .artifact-card-badge { color: var(--yellow); }
+    .artifact-card:nth-child(3) .artifact-card-badge { background: color-mix(in srgb, var(--navy) 12%, var(--surface-solid)); color: var(--text); }
+
+    .artifact-card h3 {
+      margin: 0;
+      font-size: 1.28rem;
+      letter-spacing: -.03em;
+    }
+    .artifact-card p {
+      margin: 8px 0 16px;
+      color: var(--text-2);
+      font-size: .86rem;
+      line-height: 1.5;
+    }
+    .artifact-link-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      color: var(--blue);
+      font-size: .82rem;
+      font-weight: 850;
+      margin-top: auto;
+    }
+    .artifact-link-cta span { transition: transform .2s ease; }
+    .artifact-card:hover .artifact-link-cta span { transform: translateX(4px); }
+
+    /* Sections */
+    section { margin-bottom: 58px; }
+    .section-head { margin-bottom: 20px; }
+    .section-head h2 { margin: 4px 0 0; font-size: clamp(1.6rem, 3.2vw, 2.3rem); letter-spacing: -.04em; }
+    .section-head p { margin: 6px 0 0; color: var(--muted); font-size: .9rem; max-width: 760px; }
+
+    .panel {
+      border: 1px solid var(--line);
+      border-radius: 24px;
+      background: var(--surface);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(18px);
+      padding: 30px;
     }
 
-    .section-header h2 {
-      font-size: 1.4rem;
-      color: var(--primary);
-    }
-
-    .role-badge {
-      font-size: 0.75rem;
-      font-weight: 600;
-      background: #eff6ff;
-      color: var(--accent);
-      padding: 0.25rem 0.65rem;
-      border-radius: 9999px;
-      border: 1px solid #bfdbfe;
-    }
-
-    /* Team Meta Grid */
+    /* 1. Team Cards */
     .team-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 1rem;
-      margin-top: 1rem;
+      gap: 20px;
     }
-
-    .team-card {
-      background: var(--bg);
-      border: 1px solid var(--border);
-      border-radius: 6px;
-      padding: 1rem;
-    }
-
-    .team-card .role-title {
-      font-size: 0.8rem;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-      color: var(--text-muted);
-      font-weight: 700;
-    }
-
-    .team-card .member-name {
-      font-size: 1rem;
-      font-weight: 600;
-      color: var(--primary);
-      margin: 0.25rem 0;
-    }
-
-    .team-card .deliverable-desc {
-      font-size: 0.8rem;
-      color: var(--text-muted);
-    }
-
-    /* Roadmap Swimlanes */
-    .swimlane-container {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-      gap: 1.5rem;
-      margin-bottom: 1.5rem;
-    }
-
-    .swimlane {
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      background: #fafafa;
+    .member-card {
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      background: var(--surface-soft);
+      padding: 22px;
       display: flex;
       flex-direction: column;
+      position: relative;
     }
-
-    .swimlane.crawl { border-top: 4px solid var(--crawl-border); }
-    .swimlane.walk  { border-top: 4px solid var(--walk-border); }
-    .swimlane.run   { border-top: 4px solid var(--run-border); }
-
-    .swimlane-header {
-      padding: 1rem;
-      border-bottom: 1px solid var(--border);
-      background: #fff;
-    }
-
-    .swimlane-header h3 {
-      font-size: 1.1rem;
-      color: var(--primary);
-    }
-
-    .swimlane-header span {
-      font-size: 0.8rem;
-      color: var(--text-muted);
-    }
-
-    .swimlane-content {
-      padding: 1rem;
+    .member-top {
       display: flex;
-      flex-direction: column;
-      gap: 1rem;
-      flex-grow: 1;
-    }
-
-    .initiative-card {
-      background: #fff;
-      border: 1px solid var(--border);
-      border-radius: 6px;
-      padding: 0.85rem;
-      font-size: 0.85rem;
-    }
-
-    .initiative-card h4 {
-      font-size: 0.95rem;
-      color: var(--primary);
-      margin-bottom: 0.35rem;
-    }
-
-    .initiative-card .timeline-tag {
-      display: inline-block;
-      font-size: 0.7rem;
-      font-weight: 600;
-      color: var(--text-muted);
-      background: var(--bg);
-      border: 1px solid var(--border);
-      border-radius: 4px;
-      padding: 0.1rem 0.35rem;
-      margin-bottom: 0.5rem;
-    }
-
-    .initiative-card .dependency-arrow {
-      background: #f1f5f9;
-      border-left: 3px solid var(--accent);
-      padding: 0.4rem 0.6rem;
-      font-size: 0.78rem;
-      margin-top: 0.5rem;
-      color: #334155;
-    }
-
-    .phase-rationale-box {
-      margin-top: 1rem;
-      padding: 1rem;
-      background: #f8fafc;
-      border-left: 4px solid var(--primary);
-      border-radius: 4px;
-      font-size: 0.88rem;
-    }
-
-    .phase-rationale-box h4 {
-      margin-bottom: 0.35rem;
-      color: var(--primary);
-      font-size: 0.95rem;
-    }
-
-    /* Tables (RACI & Metrics) */
-    .table-container {
-      overflow-x: auto;
-    }
-
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      font-size: 0.88rem;
-      text-align: left;
-    }
-
-    th, td {
-      padding: 0.85rem 1rem;
-      border-bottom: 1px solid var(--border);
-      vertical-align: top;
-    }
-
-    th {
-      background: #f8fafc;
-      font-weight: 600;
-      color: var(--text-muted);
-      text-transform: uppercase;
-      font-size: 0.75rem;
-      letter-spacing: 0.05em;
-    }
-
-    /* RACI Badges */
-    .badge-raci {
-      display: inline-block;
-      width: 24px;
-      height: 24px;
-      line-height: 24px;
-      text-align: center;
-      border-radius: 4px;
-      font-weight: 700;
-      font-size: 0.75rem;
-    }
-    .raci-r { background: #dbeafe; color: #1e40af; }
-    .raci-a { background: #fee2e2; color: #991b1b; }
-    .raci-c { background: #fef3c7; color: #92400e; }
-    .raci-i { background: #f1f5f9; color: #475569; }
-
-    /* QBR Dashboard Visual Components */
-    .qbr-header {
-      display: flex;
-      justify-content: space-between;
       align-items: center;
-      padding: 1rem 1.25rem;
-      border-radius: 6px;
-      margin-bottom: 1.5rem;
-      flex-wrap: wrap;
-      gap: 1rem;
+      gap: 14px;
+      margin-bottom: 14px;
+    }
+    .member-avatar {
+      width: 52px;
+      height: 52px;
+      border-radius: 16px;
+      background: linear-gradient(135deg, var(--blue), var(--navy));
+      color: #fff;
+      display: grid;
+      place-items: center;
+      font-weight: 900;
+      font-size: 1.15rem;
+      letter-spacing: -.03em;
+      box-shadow: 0 8px 18px rgba(0,113,206,.22);
+      flex: 0 0 auto;
+    }
+    .member-card:nth-child(2) .member-avatar {
+      background: linear-gradient(135deg, #0071ce, #ffc220);
+      color: #041f41;
+    }
+    .member-card:nth-child(3) .member-avatar {
+      background: linear-gradient(135deg, #16744b, #0071ce);
+    }
+    .member-card:nth-child(4) .member-avatar {
+      background: linear-gradient(135deg, var(--navy), #ffc220);
+      color: var(--yellow);
+    }
+    .member-meta h3 {
+      margin: 0;
+      font-size: 1.05rem;
+      letter-spacing: -.02em;
+    }
+    .role-badge {
+      display: inline-block;
+      margin-top: 3px;
+      padding: 3px 8px;
+      border-radius: 999px;
+      background: var(--soft-blue);
+      color: var(--blue);
+      font-size: .69rem;
+      font-weight: 850;
+      letter-spacing: .02em;
+    }
+    .member-bio {
+      margin: 0;
+      color: var(--text-2);
+      font-size: .84rem;
+      line-height: 1.58;
+    }
+    .member-ownership {
+      margin-top: 14px;
+      padding-top: 12px;
+      border-top: 1px solid var(--line);
+      font-size: .74rem;
+      color: var(--muted);
+    }
+    .member-ownership strong { color: var(--text); }
+
+    /* 2. Target Audience */
+    .audience-box {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 24px;
+      align-items: flex-start;
+    }
+    .audience-icon {
+      width: 58px;
+      height: 58px;
+      border-radius: 18px;
+      background: var(--soft-yellow);
+      color: #986a00;
+      display: grid;
+      place-items: center;
+      font-size: 1.7rem;
+      flex: 0 0 auto;
+    }
+    html[data-theme="dark"] .audience-icon { color: var(--yellow); }
+    .audience-content h3 {
+      margin: 0 0 8px;
+      font-size: 1.25rem;
+      letter-spacing: -.03em;
+    }
+    .audience-content p {
+      margin: 0;
+      color: var(--text-2);
+      font-size: .95rem;
+      line-height: 1.65;
     }
 
-    .health-badge {
+    /* 3. Benefits Grid */
+    .benefits-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(310px, 1fr));
+      gap: 16px;
+    }
+    .benefit-item {
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      background: var(--surface-soft);
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+    }
+    .benefit-tag {
       display: inline-flex;
       align-items: center;
-      gap: 0.5rem;
-      padding: 0.4rem 0.9rem;
-      border-radius: 9999px;
-      font-weight: 700;
-      font-size: 0.85rem;
-    }
-
-    .health-green { background: var(--green-bg); color: var(--green); }
-    .health-amber { background: var(--amber-bg); color: var(--amber); }
-    .health-red   { background: var(--red-bg);   color: var(--red); }
-
-    .pulse-dot {
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
-      background: currentColor;
-    }
-
-    .dashboard-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-      gap: 1rem;
-      margin-bottom: 1.5rem;
-    }
-
-    .kpi-card {
-      border: 1px solid var(--border);
-      border-radius: 6px;
-      padding: 1rem;
-      background: #fff;
-    }
-
-    .kpi-type {
-      font-size: 0.7rem;
+      gap: 6px;
+      font-size: .7rem;
+      font-weight: 900;
+      color: var(--blue);
       text-transform: uppercase;
-      font-weight: 700;
-      color: var(--text-muted);
+      letter-spacing: .06em;
+      margin-bottom: 8px;
+    }
+    .benefit-item h4 {
+      margin: 0 0 8px;
+      font-size: 1.02rem;
+      letter-spacing: -.02em;
+    }
+    .benefit-item p {
+      margin: 0 0 12px;
+      color: var(--text-2);
+      font-size: .85rem;
+      line-height: 1.55;
+      flex-grow: 1;
+    }
+    .benefit-page-ref {
+      font-size: .75rem;
+      font-weight: 800;
+      color: var(--blue);
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .benefit-page-ref:hover { text-decoration: underline; }
+
+    /* 4. Novelty Statement */
+    .novelty-container {
+      background: linear-gradient(135deg, color-mix(in srgb, var(--surface) 95%, var(--soft-blue)), var(--surface));
+      border-left: 5px solid var(--blue);
+      position: relative;
+    }
+    .novelty-text {
+      margin: 0;
+      color: var(--text);
+      font-size: .96rem;
+      line-height: 1.7;
+    }
+    .novelty-callouts {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 14px;
+      margin-top: 22px;
+      padding-top: 18px;
+      border-top: 1px solid var(--line);
+    }
+    .novelty-callout {
+      font-size: .78rem;
+      color: var(--text-2);
+    }
+    .novelty-callout strong {
+      display: block;
+      color: var(--blue);
+      font-size: .83rem;
+      margin-bottom: 2px;
     }
 
-    .kpi-name {
-      font-size: 0.95rem;
-      font-weight: 600;
-      margin: 0.2rem 0 0.5rem 0;
+    /* Repository & Governance Section */
+    .repo-panel {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: 24px;
+      align-items: center;
     }
-
-    .kpi-numbers {
+    .repo-panel p {
+      margin: 8px 0 0;
+      color: var(--text-2);
+      font-size: .88rem;
+    }
+    .repo-btn-group {
       display: flex;
-      align-items: baseline;
-      gap: 0.5rem;
+      flex-direction: column;
+      gap: 10px;
     }
-
-    .kpi-val {
-      font-size: 1.35rem;
-      font-weight: 700;
-      color: var(--primary);
+    .btn-repo {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 12px 18px;
+      border-radius: 999px;
+      background: var(--navy);
+      color: var(--yellow);
+      text-decoration: none;
+      font-weight: 850;
+      font-size: .84rem;
+      box-shadow: var(--shadow-soft);
+      transition: opacity .2s ease;
+      text-align: center;
     }
-
-    .kpi-target {
-      font-size: 0.8rem;
-      color: var(--text-muted);
+    html[data-theme="dark"] .btn-repo {
+      background: var(--blue);
+      color: #fff;
     }
+    .btn-repo:hover { opacity: .92; }
 
-    .kpi-status-tag {
-      display: inline-block;
-      margin-top: 0.5rem;
-      font-size: 0.7rem;
-      font-weight: 600;
-      padding: 0.15rem 0.45rem;
-      border-radius: 4px;
+    footer {
+      padding: 24px 0 36px;
+      border-top: 1px solid var(--line);
+      color: var(--muted);
+      font-size: .74rem;
+      display: flex;
+      justify-content: space-between;
+      gap: 18px;
     }
+    footer a { color: var(--muted); }
 
-    .status-ontrack { background: var(--green-bg); color: var(--green); }
-    .status-atrisk  { background: var(--amber-bg); color: var(--amber); }
-    .status-offtrack{ background: var(--red-bg);   color: var(--red); }
-
-    .decisions-box {
-      background: #fff7ed;
-      border: 1px solid #ffedd5;
-      border-left: 4px solid #ea580c;
-      border-radius: 4px;
-      padding: 1.25rem;
+    @media (max-width: 900px) {
+      .nav { flex-wrap: wrap; justify-content: center; padding: 10px 0; gap: 8px 14px; }
+      .nav-right { flex-wrap: wrap; justify-content: center; }
+      .navlinks { display: flex; flex-wrap: wrap; justify-content: center; }
+      .artifacts-grid { grid-template-columns: 1fr; }
+      .repo-panel { grid-template-columns: 1fr; }
     }
-
-    .decisions-box h3 {
-      color: #9a3412;
-      font-size: 1.05rem;
-      margin-bottom: 0.5rem;
-    }
-
-    .decisions-box ol {
-      margin-left: 1.25rem;
-      font-size: 0.88rem;
-      color: #7c2d12;
-    }
-
-    .decisions-box ol li {
-      margin-bottom: 0.4rem;
-    }
-
-    /* Print & Landscape Optimization (Rubric 6.38) */
-    @media print {
-      body { background: #fff; padding: 0; }
-      header { display: none; }
-      .section-card { border: none; box-shadow: none; padding: 0; page-break-after: always; }
-      @page { size: landscape; margin: 1cm; }
+    @media (max-width: 650px) {
+      .shell { width: min(100% - 24px, 1180px); }
+      .brand-copy span { display: none; }
+      .theme-toggle { min-width: 88px; }
+      .navlinks a { padding: 7px 8px; font-size: .75rem; }
+      .audience-box { grid-template-columns: 1fr; }
+      footer { flex-direction: column; }
     }
   </style>
 </head>
 <body>
+  <div class="store-bg" aria-hidden="true"></div>
+  <div class="store-tint" aria-hidden="true"></div>
 
-  <!-- ====================================================================== -->
-  <!-- TOP NAVIGATION                                                         -->
-  <!-- ====================================================================== -->
-  <header>
-    <div class="nav-container">
-      <div class="nav-brand">
-        <h1>ISM 6346: Transformation Roadmap & Governance</h1>
-        <p>Section B Group Activity · Week 6 Portfolio Submission</p>
+  <header class="topbar">
+    <div class="shell nav">
+      <a class="brand" href="index.html">
+        <div class="spark-box" aria-hidden="true">
+          <div class="spark"><b></b><b></b><b></b><b></b><b></b><b></b></div>
+        </div>
+        <div class="brand-copy">
+          <strong>Walmart Transformation Portfolio</strong>
+          <span>ISM 6346 · Group 9</span>
+        </div>
+      </a>
+      <div class="nav-right">
+        <nav class="navlinks" aria-label="Main navigation">
+          <a class="active" href="index.html" aria-current="page">About Us</a>
+          <a href="roadmap.html">Roadmap</a>
+          <a href="raci.html">RACI</a>
+          <a href="dashboard.html">QBR Dashboard</a>
+        </nav>
+        <button class="theme-toggle" id="themeToggle" type="button" aria-label="Toggle light and dark mode">◐ Dark</button>
       </div>
-      <nav>
-        <a href="#overview">Overview</a>
-        <a href="#roadmap">1. Roadmap</a>
-        <a href="#raci">2. Governance RACI</a>
-        <a href="#dashboard">3. QBR Dashboard</a>
-      </nav>
     </div>
   </header>
 
-  <main>
-
-    <!-- ====================================================================== -->
-    <!-- CASE OVERVIEW & TEAM METADATA (Section 6.34 & 6.35)                     -->
-    <!-- ====================================================================== -->
-    <section id="overview" class="section-card">
-      <div class="section-header">
-        <h2>Case Summary & Team Responsibilities</h2>
-        <span class="role-badge">Group Artifact</span>
-      </div>
-
-      <!-- EDIT HERE: Company Profile and Primary Source Citations (Section 6.35 / 6.40) -->
-      <div style="margin-bottom: 1.5rem;">
-        <h3 style="font-size: 1.1rem; margin-bottom: 0.35rem;">Case Selection: [Insert Company Name, e.g., DBS Bank / Maersk / Domino's]</h3>
-        <p style="font-size: 0.9rem; color: #475569;">
-          <strong>Case Overview:</strong> [Insert 2–3 sentences summarizing the enterprise context and transformation scope].
-        </p>
-        <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 0.35rem;">
-          <strong>Primary Sources:</strong> [List specific citations: e.g., Annual Report 2023 Digital Strategy section, Investor Day presentation, Harvard Business School Case #...].
-        </p>
-      </div>
-
-      <div class="team-grid">
-        <div class="team-card">
-          <div class="role-title">Member A · Roadmap Sequencer</div>
-          <div class="member-name">[Team Member A Name]</div>
-          <div class="deliverable-desc">Accountable for Crawl/Walk/Run sequencing, dependency annotations, and phase rationale narratives.</div>
-        </div>
-        <div class="team-card">
-          <div class="role-title">Member B · Governance Designer</div>
-          <div class="member-name">[Team Member B Name]</div>
-          <div class="deliverable-desc">Accountable for 5–7 recurring governance decisions, single-Accountable assignments, and rationale.</div>
-        </div>
-        <div class="team-card">
-          <div class="role-title">Member C · Dashboard Designer</div>
-          <div class="member-name">Hudson Trussell <!-- or Member C Name --></div>
-          <div class="deliverable-desc">Accountable for QBR Dashboard layout, leading/lagging metric balance, and leadership decision tracking.</div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ====================================================================== -->
-    <!-- DELIVERABLE 1: TRANSFORMATION ROADMAP (MEMBER A)                        -->
-    <!-- Rubric 6.36 & 6.40: Crawl/Walk/Run + explicit dependency annotations    -->
-    <!-- ====================================================================== -->
-    <section id="roadmap" class="section-card">
-      <div class="section-header">
-        <h2>1. Transformation Roadmap</h2>
-        <span class="role-badge">Member A Deliverable</span>
-      </div>
-
-      <div class="swimlane-container">
-        <!-- CRAWL PHASE -->
-        <div class="swimlane crawl">
-          <div class="swimlane-header">
-            <h3>Crawl — Foundation</h3>
-            <span>Capability Building · Months 1–12 (Q1–Q4)</span>
-          </div>
-          <div class="swimlane-content">
-            <!-- Initiative Card 1 -->
-            <div class="initiative-card">
-              <span class="timeline-tag">Q1 – Q2</span>
-              <h4>[Initiative 1: Enterprise Data Lakehouse Consolidation]</h4>
-              <p>Unify siloed customer transaction logs into a centralized real-time lakehouse.</p>
-              <div class="dependency-arrow">
-                <strong>Enables:</strong> Foundation for unified customer profiles in Walk.
-              </div>
-            </div>
-
-            <!-- Initiative Card 2 -->
-            <div class="initiative-card">
-              <span class="timeline-tag">Q2 – Q4</span>
-              <h4>[Initiative 2: Core API Gateway Modernization]</h4>
-              <p>Standardize RESTful services and retire legacy point-to-point SOAP endpoints.</p>
-              <div class="dependency-arrow">
-                <strong>Enables:</strong> Rapid service orchestration for pilot mobile apps.
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- WALK PHASE -->
-        <div class="swimlane walk">
-          <div class="swimlane-header">
-            <h3>Walk — Deployment</h3>
-            <span>Targeted Pilot & Validation · Months 12–24 (Q5–Q8)</span>
-          </div>
-          <div class="swimlane-content">
-            <!-- Initiative Card 3 -->
-            <div class="initiative-card">
-              <span class="timeline-tag">Q5 – Q6</span>
-              <h4>[Initiative 3: Pilot Real-Time Personalization Engine]</h4>
-              <p>Deploy recommendation algorithms strictly within the North America e-commerce unit.</p>
-              <div class="dependency-arrow">
-                <strong>Depends on:</strong> Initiative 1 (Lakehouse Data Foundation).<br />
-                <strong>Readiness Signal:</strong> +15% conversion lift in pilot test group.
-              </div>
-            </div>
-
-            <!-- Initiative Card 4 -->
-            <div class="initiative-card">
-              <span class="timeline-tag">Q6 – Q8</span>
-              <h4>[Initiative 4: Automated Dispatch Workflow (Pilot Region)]</h4>
-              <p>Deploy automated scheduling in high-density European logistics hubs.</p>
-              <div class="dependency-arrow">
-                <strong>Depends on:</strong> Initiative 2 (Modern API Gateway).<br />
-                <strong>Readiness Signal:</strong> 25% reduction in manual dispatch overrides.
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- RUN PHASE -->
-        <div class="swimlane run">
-          <div class="swimlane-header">
-            <h3>Run — Scale</h3>
-            <span>Enterprise Scaling & Org Change · Months 24–36 (Q9–Q12)</span>
-          </div>
-          <div class="swimlane-content">
-            <!-- Initiative Card 5 -->
-            <div class="initiative-card">
-              <span class="timeline-tag">Q9 – Q12</span>
-              <h4>[Initiative 5: Global Omnichannel AI Platform]</h4>
-              <p>Scale real-time recommendation engine across all international divisions and store POS.</p>
-              <div class="dependency-arrow">
-                <strong>Scales:</strong> Initiative 3 (Pilot Personalization Engine).<br />
-                <strong>Org Change Required:</strong> Retrain store staff; centralize pricing authority.
-              </div>
-            </div>
-
-            <!-- Initiative Card 6 -->
-            <div class="initiative-card">
-              <span class="timeline-tag">Q10 – Q12</span>
-              <h4>[Initiative 6: Autonomous Logistics Network]</h4>
-              <p>Full enterprise roll-out of algorithmic dispatch across global fleet.</p>
-              <div class="dependency-arrow">
-                <strong>Scales:</strong> Initiative 4 (Pilot Dispatch Workflow).<br />
-                <strong>Org Change Required:</strong> Transition regional dispatchers into exception managers.
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Phase Rationale Paragraphs (75–100 words each required by Section 6.34) -->
-      <div class="phase-rationale-box">
-        <h4>Crawl Phase Dependency Rationale (Member A)</h4>
-        <p>[Write 75–100 words here explaining why Crawl initiatives must precede Walk initiatives. Address dependency logic: e.g., predictive analytics cannot run reliably without unified, cleansed data in the lakehouse...]</p>
-      </div>
-
-      <div class="phase-rationale-box" style="margin-top: 0.75rem;">
-        <h4>Walk & Run Transition Rationale (Member A)</h4>
-        <p>[Write 75–100 words explaining why Walk pilots are needed to validate unit economics and operational readiness before committing global capital in the Run phase...]</p>
-      </div>
-    </section>
-
-    <!-- ====================================================================== -->
-    <!-- DELIVERABLE 2: GOVERNANCE RACI MATRIX (MEMBER B)                         -->
-    <!-- Rubric 6.37 & 6.40: 5–7 recurring decisions, 1 Accountable + rationale  -->
-    <!-- ====================================================================== -->
-    <section id="raci" class="section-card">
-      <div class="section-header">
-        <h2>2. Governance RACI Matrix</h2>
-        <span class="role-badge">Member B Deliverable</span>
-      </div>
-
-      <p style="font-size: 0.88rem; color: var(--text-muted); margin-bottom: 1rem;">
-        Each decision governs recurring trade-offs across the roadmap. Exactly one role is marked Accountable (<strong>A</strong>) per decision.
+  <main class="shell">
+    <!-- Hero -->
+    <section class="hero">
+      <div class="eyebrow">ISM 6346 · Group 9 Portfolio</div>
+      <h1>Planning the Journey:<br />From Ambition to Execution</h1>
+      <p class="hero-copy">
+        A transformation roadmap without sequencing is a wish list; without governance, a perpetual conflict; and without quarterly checkpoints, a blind march. Explore our integrated portfolio of Walmart’s next-generation supply chain and omnichannel modernization.
       </p>
-
-      <div class="table-container">
-        <table>
-          <thead>
-            <tr>
-              <th style="width: 25%;">Recurring Governance Decision</th>
-              <th style="text-align: center;">Chief Digital Officer (CDO)</th>
-              <th style="text-align: center;">Chief Info Officer (CIO)</th>
-              <th style="text-align: center;">SVP Product / Ops</th>
-              <th style="text-align: center;">BU General Managers</th>
-              <th style="width: 35%;">Accountable Role & Rationale</th>
-            </tr>
-          </thead>
-          <tbody>
-            <!-- Decision 1: Budget Allocation -->
-            <tr>
-              <td><strong>1. Transformation Budget Reallocation:</strong> Reallocating capital between initiatives when quarterly ROI thresholds shift.</td>
-              <td style="text-align: center;"><span class="badge-raci raci-a">A</span></td>
-              <td style="text-align: center;"><span class="badge-raci raci-c">C</span></td>
-              <td style="text-align: center;"><span class="badge-raci raci-c">C</span></td>
-              <td style="text-align: center;"><span class="badge-raci raci-i">I</span></td>
-              <td><strong>Accountable: CDO.</strong> The CDO owns the transformation investment envelope and must preserve enterprise portfolio coherence over divisional budget disputes.</td>
-            </tr>
-
-            <!-- Decision 2: Architecture Standards -->
-            <tr>
-              <td><strong>2. Platform Architecture Overrides:</strong> Approving exceptions to shared API, cloud, and microservice enterprise standards.</td>
-              <td style="text-align: center;"><span class="badge-raci raci-c">C</span></td>
-              <td style="text-align: center;"><span class="badge-raci raci-a">A</span></td>
-              <td style="text-align: center;"><span class="badge-raci raci-i">I</span></td>
-              <td style="text-align: center;"><span class="badge-raci raci-r">R</span></td>
-              <td><strong>Accountable: CIO.</strong> The CIO maintains technical debt governance and long-term infrastructure maintainability across all digital assets.</td>
-            </tr>
-
-            <!-- Decision 3: Data Governance -->
-            <tr>
-              <td><strong>3. Cross-BU Data Access & Sharing:</strong> Setting mandatory master data quality standards and granting cross-divisional data access.</td>
-              <td style="text-align: center;"><span class="badge-raci raci-a">A</span></td>
-              <td style="text-align: center;"><span class="badge-raci raci-c">C</span></td>
-              <td style="text-align: center;"><span class="badge-raci raci-r">R</span></td>
-              <td style="text-align: center;"><span class="badge-raci raci-c">C</span></td>
-              <td><strong>Accountable: CDO / Head of Data.</strong> Resolves data-hoarding between BUs to guarantee enterprise lakehouse integrity.</td>
-            </tr>
-
-            <!-- Decision 4: Initiative Prioritization -->
-            <tr>
-              <td><strong>4. Feature & Backlog Prioritization:</strong> Deciding sequence conflicts between BU-specific requests and enterprise platform features.</td>
-              <td style="text-align: center;"><span class="badge-raci raci-c">C</span></td>
-              <td style="text-align: center;"><span class="badge-raci raci-i">I</span></td>
-              <td style="text-align: center;"><span class="badge-raci raci-a">A</span></td>
-              <td style="text-align: center;"><span class="badge-raci raci-r">R</span></td>
-              <td><strong>Accountable: SVP Product.</strong> Holds the ultimate decision-right balancing end-user feature delivery against platform foundational build.</td>
-            </tr>
-
-            <!-- Decision 5: Vendor & Partnership Selection -->
-            <tr>
-              <td><strong>5. Strategic Tech Vendor Commitments:</strong> Selecting long-term cloud and enterprise software partners.</td>
-              <td style="text-align: center;"><span class="badge-raci raci-c">C</span></td>
-              <td style="text-align: center;"><span class="badge-raci raci-a">A</span></td>
-              <td style="text-align: center;"><span class="badge-raci raci-i">I</span></td>
-              <td style="text-align: center;"><span class="badge-raci raci-i">I</span></td>
-              <td><strong>Accountable: CIO.</strong> Prevents siloed BU procurement from producing redundant contracts and unsupported infrastructure footprints.</td>
-            </tr>
-
-            <!-- Decision 6: Case-Specific Governance Choice -->
-            <tr>
-              <td><strong>6. Pilot-to-Scale Go/No-Go Gate:</strong> Authorizing transition of Walk pilots into enterprise-wide Run deployment.</td>
-              <td style="text-align: center;"><span class="badge-raci raci-a">A</span></td>
-              <td style="text-align: center;"><span class="badge-raci raci-c">C</span></td>
-              <td style="text-align: center;"><span class="badge-raci raci-r">R</span></td>
-              <td style="text-align: center;"><span class="badge-raci raci-c">C</span></td>
-              <td><strong>Accountable: CDO.</strong> Ensures strict threshold metrics from pilot are met before unlocking major Run expenditure.</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
     </section>
 
-    <!-- ====================================================================== -->
-    <!-- DELIVERABLE 3: QBR DASHBOARD (MEMBER C)                                -->
-    <!-- Rubric 6.38 & 6.40: 6–8 leading/lagging metrics, health status,       -->
-    <!-- and Decisions Required this Quarter (matching Member B's RACI)         -->
-    <!-- ====================================================================== -->
-    <section id="dashboard" class="section-card">
-      <div class="section-header">
-        <h2>3. Executive QBR Dashboard</h2>
-        <span class="role-badge">Member C Deliverable</span>
-      </div>
-
-      <!-- Executive Health Header -->
-      <div class="qbr-header" style="background: #f1f5f9; border: 1px solid var(--border);">
+    <!-- Artifacts Navigation Cards -->
+    <div class="artifacts-grid">
+      <a class="artifact-card" href="roadmap.html">
         <div>
-          <span style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-muted); font-weight: 700;">Executive Review Artifact</span>
-          <h3 style="font-size: 1.2rem; color: var(--primary);">Quarterly Transformation Health · Q3 FY26</h3>
+          <span class="artifact-card-badge">Deliverable 1 · Member A</span>
+          <h3>Transformation Roadmap</h3>
+          <p>Sequences eight core initiatives across Crawl, Walk, and Run phases with five explicit dependency logic bridges grounded in SEC filings and investor disclosures.</p>
         </div>
-        <div class="health-badge health-green">
-          <span class="pulse-dot"></span>
-          <span>OVERALL STATUS: ON TRACK</span>
-        </div>
-      </div>
-      <p style="font-size: 0.88rem; color: #334155; margin-top: -0.75rem; margin-bottom: 1.5rem;">
-        <strong>Health Rationale:</strong> Foundational API gateways and data pipelines are complete on schedule; pilot conversion lifts in North America meet required thresholds for Run scaling.
-      </p>
+        <div class="artifact-link-cta">View Roadmap <span>→</span></div>
+      </a>
 
-      <!-- 6–8 Metrics (Leading vs. Lagging Mix + Org Health Metric) -->
-      <h3 style="font-size: 1rem; color: var(--primary); margin-bottom: 0.75rem;">Transformation Metric Scorecard (Leading & Lagging)</h3>
-      <div class="dashboard-grid">
-        
-        <!-- Metric 1: Leading -->
-        <div class="kpi-card">
-          <div class="kpi-type">Leading Indicator · Crawl</div>
-          <div class="kpi-name">Legacy API Deprecation %</div>
-          <div class="kpi-numbers">
-            <span class="kpi-val">82%</span>
-            <span class="kpi-target">/ Target 75%</span>
-          </div>
-          <span class="kpi-status-tag status-ontrack">On Track</span>
+      <a class="artifact-card" href="raci.html">
+        <div>
+          <span class="artifact-card-badge">Deliverable 2 · Member B</span>
+          <h3>Governance RACI</h3>
+          <p>Establishes decision rights for seven recurring enterprise trade-offs—including budget, architecture, and network priority—with exactly one accountable Walmart EVP each.</p>
         </div>
+        <div class="artifact-link-cta">View RACI Matrix <span>→</span></div>
+      </a>
 
-        <!-- Metric 2: Leading -->
-        <div class="kpi-card">
-          <div class="kpi-type">Leading Indicator · Walk</div>
-          <div class="kpi-name">Pilot Regional Adoption Rate</div>
-          <div class="kpi-numbers">
-            <span class="kpi-val">68%</span>
-            <span class="kpi-target">/ Target 60%</span>
-          </div>
-          <span class="kpi-status-tag status-ontrack">On Track</span>
+      <a class="artifact-card" href="dashboard.html">
+        <div>
+          <span class="artifact-card-badge">Deliverable 3 · Member C</span>
+          <h3>QBR Review Dashboard</h3>
+          <p>A one-page leadership instrument tracking leading automation reach, lagging P&amp;L growth, workforce change health, and Q4 FY2026 executive decisions.</p>
         </div>
+        <div class="artifact-link-cta">View QBR Dashboard <span>→</span></div>
+      </a>
+    </div>
 
-        <!-- Metric 3: Lagging -->
-        <div class="kpi-card">
-          <div class="kpi-type">Lagging Indicator · Walk</div>
-          <div class="kpi-name">Pilot Conversion Lift</div>
-          <div class="kpi-numbers">
-            <span class="kpi-val">+14.2%</span>
-            <span class="kpi-target">/ Target +15.0%</span>
-          </div>
-          <span class="kpi-status-tag status-atrisk">At Risk</span>
-        </div>
-
-        <!-- Metric 4: Lagging -->
-        <div class="kpi-card">
-          <div class="kpi-type">Lagging Indicator · Run</div>
-          <div class="kpi-name">Realized Cost Savings (OpEx)</div>
-          <div class="kpi-numbers">
-            <span class="kpi-val">$4.2M</span>
-            <span class="kpi-target">/ Target $4.0M</span>
-          </div>
-          <span class="kpi-status-tag status-ontrack">On Track</span>
-        </div>
-
-        <!-- Metric 5: Organizational Change Metric (Required by 6.38) -->
-        <div class="kpi-card">
-          <div class="kpi-type">Org Health Indicator</div>
-          <div class="kpi-name">Digital Fluency Training %</div>
-          <div class="kpi-numbers">
-            <span class="kpi-val">89%</span>
-            <span class="kpi-target">/ Target 85%</span>
-          </div>
-          <span class="kpi-status-tag status-ontrack">On Track</span>
-        </div>
-
-        <!-- Metric 6: Org / Cultural Metric -->
-        <div class="kpi-card">
-          <div class="kpi-type">Org Health Indicator</div>
-          <div class="kpi-name">Cross-Functional Team Retention</div>
-          <div class="kpi-numbers">
-            <span class="kpi-val">94%</span>
-            <span class="kpi-target">/ Target 90%</span>
-          </div>
-          <span class="kpi-status-tag status-ontrack">On Track</span>
-        </div>
-
+    <!-- 1. The Team -->
+    <section id="team">
+      <div class="section-head">
+        <div class="eyebrow">Section 1 · Team Profiles</div>
+        <h2>Who Produced It</h2>
+        <p>Four distinct planning disciplines united under one consistent evidentiary and architectural standard.</p>
       </div>
 
-      <!-- Decisions Required This Quarter (Must map to RACI choices - Section 6.38 & 6.40) -->
-      <div class="decisions-box">
-        <h3>Decisions Required This Quarter</h3>
-        <p style="font-size: 0.85rem; color: #7c2d12; margin-bottom: 0.75rem;">
-          Governance choices escalated from Member B's RACI matrix requiring executive resolution this quarter:
-        </p>
-        <ol>
-          <li>
-            <strong>Scale Authorization (RACI #6):</strong> Review North America pilot conversion metrics to release Phase 3 Run funding for European and Asian rollouts. <em>(Accountable: CDO)</em>
-          </li>
-          <li>
-            <strong>Architecture Exception Request (RACI #2):</strong> Adjudicate Logistics BU petition to retain custom legacy routing engine vs. standardizing on enterprise cloud dispatch. <em>(Accountable: CIO)</em>
-          </li>
-          <li>
-            <strong>H2 Budget Reallocation (RACI #1):</strong> Shift $1.5M surplus from completed data lakehouse build into expanding change management training programs. <em>(Accountable: CDO)</em>
-          </li>
-        </ol>
+      <div class="panel">
+        <div class="team-grid">
+          <!-- Member A -->
+          <article class="member-card">
+            <div class="member-top">
+              <div class="member-avatar">GK</div>
+              <div class="member-meta">
+                <h3>Giang Khuu</h3>
+                <span class="role-badge">Roadmap Sequencer</span>
+              </div>
+            </div>
+            <p class="member-bio">
+              Brings analytical experience in logistics process engineering and supply chain systems. Evaluated Walmart’s enterprise disclosures to translate multi-year warehouse modernizations into a testable Crawl/Walk/Run capability progression. Accountable for initiative selection and cross-phase dependency logic.
+            </p>
+            <div class="member-ownership">
+              <strong>Owned:</strong> <code>roadmap.html</code> (Crawl/Walk/Run sequencing &amp; dependency arrows)
+            </div>
+          </article>
+
+          <!-- Member B -->
+          <article class="member-card">
+            <div class="member-top">
+              <div class="member-avatar">LS</div>
+              <div class="member-meta">
+                <h3>Lira Sandoval Campos</h3>
+                <span class="role-badge">Governance Designer</span>
+              </div>
+            </div>
+            <p class="member-bio">
+              Specializes in organizational decision modeling and corporate operating policies. Analyzed Walmart U.S. executive structure and board committee charters to define single-point accountability for recurring platform and capex tensions. Formulated governance assignments and Accountable rationales.
+            </p>
+            <div class="member-ownership">
+              <strong>Owned:</strong> <code>raci.html</code> (7 recurring governance decisions &amp; Accountable rationales)
+            </div>
+          </article>
+
+          <!-- Member C -->
+          <article class="member-card">
+            <div class="member-top">
+              <div class="member-avatar">AI</div>
+              <div class="member-meta">
+                <h3>Azimjon Izzatillaev</h3>
+                <span class="role-badge">Dashboard Designer</span>
+              </div>
+            </div>
+            <p class="member-bio">
+              Focuses on management reporting systems, financial performance indicators, and executive data presentation. Engineered the FY2026 QBR dashboard to synthesize operational automation milestones, store fulfillment adoption, and workforce transition metrics into one legible landscape review.
+            </p>
+            <div class="member-ownership">
+              <strong>Owned:</strong> <code>dashboard.html</code> (High-fidelity landscape QBR review &amp; threshold alerts)
+            </div>
+          </article>
+
+          <!-- Member D -->
+          <article class="member-card">
+            <div class="member-top">
+              <div class="member-avatar">HT</div>
+              <div class="member-meta">
+                <h3>Hudson Trussell</h3>
+                <span class="role-badge">Site Editor</span>
+              </div>
+            </div>
+            <p class="member-bio">
+              Brings technical experience in data pipeline orchestration, frontend web development, and cloud services. Managed GitHub repository branching controls, enforced strict cross-artifact naming and metric consistency, and synthesized primary evidentiary sources across SEC filings.
+            </p>
+            <div class="member-ownership">
+              <strong>Owned:</strong> <code>index.html</code>, Git workflow, source verification, and site integration
+            </div>
+          </article>
+        </div>
       </div>
     </section>
 
+    <!-- 2. Target Audience -->
+    <section id="audience">
+      <div class="section-head">
+        <div class="eyebrow">Section 2 · Target Audience</div>
+        <h2>Who It Is For</h2>
+        <p>Built for executive leaders navigating the messy intersection of capital allocation, operational friction, and technical architecture.</p>
+      </div>
+
+      <div class="panel">
+        <div class="audience-box">
+          <div class="audience-icon" aria-hidden="true">🎯</div>
+          <div class="audience-content">
+            <h3>Chief Operating Officer / SVP of Supply Chain at a Tier-1 Omnichannel Enterprise</h3>
+            <p>
+              Specifically tailored for the Chief Operating Officer or Senior Vice President of Omnichannel Supply Chain at a large-scale retail or distribution enterprise ($10B+ annual revenue) who must present a multi-year logistics transformation roadmap to the board of directors. This leader is caught between store operations demanding immediate delivery throughput, technology teams proposing capital-intensive warehouse robotics, and a CFO requiring explicit checkpoints before approving subsequent funding tranches.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3. Benefits to That Audience -->
+    <section id="benefits">
+      <div class="section-head">
+        <div class="eyebrow">Section 3 · Measurable Value</div>
+        <h2>Concrete Benefits to the Reader</h2>
+        <p>Specific analytical checks and strategic decisions this portfolio enables that generic case summaries cannot.</p>
+      </div>
+
+      <div class="panel">
+        <div class="benefits-grid">
+          <div class="benefit-item">
+            <span class="benefit-tag">Roadmap Capability</span>
+            <h4>Enforce Prerequisite Foundations Before Committing Autonomous Scale</h4>
+            <p>
+              Lets leadership verify that autonomous forklift deployments (W3) and automated perishable grocery facilities (R1) are not scheduled before regional distribution automation (C1) and eCommerce fulfillment centers (C2) establish standardized physical and data infrastructure.
+            </p>
+            <a class="benefit-page-ref" href="roadmap.html">Check dependency logic on Roadmap →</a>
+          </div>
+
+          <div class="benefit-item">
+            <span class="benefit-tag">Governance Authority</span>
+            <h4>Eliminate Cross-Functional Deadlocks with Single-Point Accountability</h4>
+            <p>
+              Resolves competing priority fights between store parcel stations (W2) and grocery distribution automation (R1) by seating final decision rights exclusively with the Walmart U.S. COO (D4), while routing capital pool allocation to the CFO (D1) rather than project advocates.
+            </p>
+            <a class="benefit-page-ref" href="raci.html">Review decision rights on RACI →</a>
+          </div>
+
+          <div class="benefit-item">
+            <span class="benefit-tag">Executive Oversight</span>
+            <h4>Detect Operational Adoption Lags Before Operating Leverage Erodes</h4>
+            <p>
+              Provides a 10-minute quarterly review signaling when foundational automation reach lags expectations (stores at ~60% vs. 65% target) despite strong top-line operating income (+5.3%), immediately triggering governance reviews (D4, D6, D7) before approving future expansion.
+            </p>
+            <a class="benefit-page-ref" href="dashboard.html">Inspect leading vs. lagging metrics on QBR →</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4. Novelty Statement -->
+    <section id="novelty">
+      <div class="section-head">
+        <div class="eyebrow">Section 4 · Novelty &amp; Team Judgment</div>
+        <h2>Novelty Statement</h2>
+        <p>How our analysis adds actionable, pointable value beyond a standard course deliverable.</p>
+      </div>
+
+      <div class="panel novelty-container">
+        <p class="novelty-text">
+          Rather than organizing Walmart’s journey by technology silos—grouping all software into one phase and all robotics into another—our team structured the portfolio strictly around operational dependency. On the <strong>Roadmap</strong> (<code>roadmap.html</code>), we placed store parcel stations (W2) in Walk because routing fulfillment-center volume through retail docks cannot function without both next-generation eCommerce fulfillment centers (C2) and store-level Alphabot market fulfillment nodes (C3). In the <strong>RACI Matrix</strong> (<code>raci.html</code>), we refused the common trap of collective accountability; we mapped decision D3 (data ownership) directly to the Walmart U.S. COO because Walmart’s SEC Form 10-K disclosures list no enterprise Chief Data Officer, placing data authority where physical inventory decisions actually execute. On the <strong>QBR Dashboard</strong> (<code>dashboard.html</code>), we balanced automated freight adoption with an associate career-mobility metric (86.4% higher-level roles filled internally, verified in Walmart’s July 2026 ESG disclosure), while triggering an Amber governance alert because Crawl automation reached 60% of stores against an original 65% investor target. This forces leadership to resolve network priority D4 and pilot-to-scale gate D6 before releasing next-phase capital.
+        </p>
+
+        <div class="novelty-callouts">
+          <div class="novelty-callout">
+            <strong>Dependency Sequencing</strong>
+            C1/C2/C3 foundational capacity directly unlocks W1/W2/W3 limited deployments.
+          </div>
+          <div class="novelty-callout">
+            <strong>Singular Accountability</strong>
+            Zero shared Accountable cells; realistic titles verified against SEC 10-K &amp; 8-K filings.
+          </div>
+          <div class="novelty-callout">
+            <strong>Change-Health Instrumentation</strong>
+            Workforce upward mobility (86.4%) tracked alongside P&amp;L and throughput metrics.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Version Control & Consistency Check -->
+    <section id="repository">
+      <div class="panel repo-panel">
+        <div>
+          <div class="eyebrow" style="margin-bottom: 6px;">Collaborative Engineering</div>
+          <h3 style="margin: 0; font-size: 1.25rem;">Enforced Decision Governance in Git</h3>
+          <p>
+            Following Section 6.43, our GitHub repository implements our RACI principles directly in code: main branch protection requires at least one peer review approval before merging, mirroring the exact accountability loops mapped across our four deliverables.
+          </p>
+        </div>
+        <div class="repo-btn-group">
+          <a class="btn-repo" href="https://github.com/htrussell/digital-transform-w6" target="_blank" rel="noopener">
+            View GitHub Repository ↗
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      <span>Walmart U.S. Supply Chain Transformation Portfolio · ISM 6346 · Group 9</span>
+      <span>
+        Background Photo:
+        <a target="_blank" rel="noopener" href="https://commons.wikimedia.org/wiki/File:Walmart_Supercenter_interior_-_Tallahassee,_Leon_County,_FL_-_Thomasville_Road.jpg">
+          Winnebaggo / Wikimedia Commons
+        </a> (CC BY-SA 4.0)
+      </span>
+    </footer>
   </main>
 
+  <script>
+    /* Synchronized Theme Toggle (shares 'walmart-roadmap-theme' key across all pages) */
+    const root = document.documentElement;
+    const themeToggle = document.getElementById("themeToggle");
+
+    function setTheme(theme) {
+      root.dataset.theme = theme;
+      try { localStorage.setItem("walmart-roadmap-theme", theme); } catch (e) {}
+      themeToggle.textContent = theme === "dark" ? "☀ Light" : "◐ Dark";
+    }
+
+    let savedTheme = null;
+    try { savedTheme = localStorage.getItem("walmart-roadmap-theme"); } catch (e) {}
+    const systemDark = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches;
+    setTheme(savedTheme || (systemDark ? "dark" : "light"));
+
+    themeToggle.addEventListener("click", () => {
+      setTheme(root.dataset.theme === "dark" ? "light" : "dark");
+    });
+  </script>
 </body>
 </html>
