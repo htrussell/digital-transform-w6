@@ -410,8 +410,13 @@
     }
 
     .deck-card[data-key="run"] .deck-icon {
-      color: var(--text);
-      background: color-mix(in srgb, var(--navy) 12%, var(--surface-solid));
+      color: #005a9c;
+      background: var(--soft-blue);
+    }
+
+    html[data-theme="dark"] .deck-card[data-key="run"] .deck-icon {
+      color: #54b5ff;
+      background: color-mix(in srgb, var(--blue) 30%, var(--surface-solid));
     }
 
     .deck-card[data-key="dependencies"] .deck-icon {
